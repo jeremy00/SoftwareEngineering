@@ -72,7 +72,7 @@ public class lobby2 extends JFrame implements CheckersClient {
 	 * Create the frame.
 	 */
 	public lobby2() {
-		setDefaultCloseOp         eration(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 523, 477);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

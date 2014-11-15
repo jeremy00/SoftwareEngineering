@@ -18,3 +18,14 @@ C:\Documents and Settings\user\my documents\visual studio 2010\Projects\se serve
 C:\Documents and Settings\user\my documents\visual studio 2010\Projects\se server\se server\obj\x86\Debug\se server.application
 C:\Documents and Settings\user\my documents\visual studio 2010\Projects\se server\se server\obj\x86\Debug\se server.exe
 C:\Documents and Settings\user\my documents\visual studio 2010\Projects\se server\se server\obj\x86\Debug\se server.pdb
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\obj\x86\Debug\se server.exe
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\obj\x86\Debug\se server.pdb
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\bin\Debug\se server.exe.manifest
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\bin\Debug\se server.application
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\bin\Debug\se server.exe
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\bin\Debug\se server.pdb
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\obj\x86\Debug\se server.csprojResolveAssemblyReference.cache
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\obj\x86\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\obj\x86\Debug\se server.csproj.GenerateResource.Cache
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\obj\x86\Debug\se server.exe.manifest
+C:\Users\Meri\Documents\GitHub\SoftwareEngineering\se server\se server\obj\x86\Debug\se server.application

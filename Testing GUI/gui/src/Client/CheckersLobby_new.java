@@ -293,7 +293,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			chatInputField = new JTextField("130.108.28.165");
 			chatInputField.setScrollOffset(1);
 			chatInputField.setPreferredSize(new java.awt.Dimension(389, 29));
-			chatInputField.set\\\\\\\\\\\\\\\\\\\\\\\\\eyAdapter() {
+			chatInputField.addKeyListener(new KeyAdapter(){
 				// Listener for ENTER key
 				public void keyPressed(KeyEvent evt) {
 					if (evt.getKeyCode() == 10)
