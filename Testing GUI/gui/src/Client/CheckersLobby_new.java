@@ -180,7 +180,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			tableList.setBounds(10, 15, 359, 131);
 			contentPane.add(tableList);
 			
-			chatInputField = new JTextField();
+			chatInputField = new JTextField("fe80::e945:8111:8e95:9e9d");
 			chatInputField.setBounds(10, 411, 419, 20);
 			contentPane.add(chatInputField);
 			chatInputField.setColumns(10);
@@ -218,6 +218,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private void inputSubmit(){
 		try{
 			System.out.println("Submit buttons was pressed.");
+			//chatInputField.setText("button pressed");
 			if(curState.equals(State.notConnected)){
 				String input[] = chatInputField.getText().split("\\s");
 				//0 - ip address 1 - username			
