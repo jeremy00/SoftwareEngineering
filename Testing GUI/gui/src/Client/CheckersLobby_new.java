@@ -163,12 +163,12 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			contentPane.setLayout(null);
 			contentPane.setSize(500, 500);
 			
-			submitButton = new JButton("New button");
+			submitButton = new JButton("Submit");
 			submitButton.setBounds(435, 411, 70, 22);
 			contentPane.add(submitButton);
 			
-			chatArea = new JTextArea();
-			chatArea.setForeground(Color.WHITE);
+			chatArea = new JTextArea(conText);
+			chatArea.setForeground(Color.BLACK);
 			chatArea.setBounds(10, 157, 495, 239);
 			contentPane.add(chatArea);
 			
@@ -218,22 +218,29 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private void inputSubmit(){
 		try{
 			System.out.println("Submit buttons was pressed.");
-			//chatInputField.setText("button pressed");
+			
+			//IF user is NOT CONNECTED
 			if(curState.equals(State.notConnected)){
 				String input[] = chatInputField.getText().split("\\s");
 				//0 - ip address 1 - username			
+				//FAILED CONNECTION, lacking 2 inputs
 				if(input.length < 2) { 
 					output("Connection failed. Did you remember to add a username?");
 				}
+				//FAILED CONNECTION, RMI issue
 				else if(!serverConnection.connectToServer(input[0], input[1])) {					
 					output("Connection failed. Check console output of RMI process for information.");
 				}
+				//SUCCESSFUL CONNECTION, tell user welcome.
 				else {
 					myName = input[1];
 					System.out.print("welcome! ");
+					
 					chatArea.setText(">> Welcome, " + myName + "!\n");
 				}
 			}
+			
+			//IF THEY ARE CONNECTED, do chat functions
 			else //if(curState.equals(State.inLobby)){		
 				{String input = chatInputField.getText();
 				// Private Message
@@ -277,18 +284,18 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	/**
 	* GUI Helpers
 	*/
-	public JScrollPane getChatPane() {
-		if(chatPane == null) {
-			chatPane = new JScrollPane(getChatArea());
-			chatPane.setPreferredSize(new java.awt.Dimension(406, 267));
-
-		}
-		return chatPane;
-	}
-	public JTextArea getChatArea() {
-		
-		return chatArea;
-	}
+//	public JScrollPane getChatPane() {
+//		if(chatPane == null) {
+//			chatPane = new JScrollPane(getChatArea());
+//			chatPane.setPreferredSize(new java.awt.Dimension(406, 267));
+//
+//		}
+//		return chatPane;
+//	}
+//	public JTextArea getChatArea() {
+//		
+//		return chatArea;
+//	}
 	private JTextField getChatInputField() {
 		
 			chatInputField = new JTextField("130.108.28.165");
