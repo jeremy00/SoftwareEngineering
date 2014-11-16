@@ -54,8 +54,10 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private String conText = "To connect, enter <ip address> <username>"; //
 	private JList userListPane;
 	private JScrollPane userPane;
-	private JTabbedPane jTabbedPane;
 	private JButton submitButton;
+	private JButton btnCreateGame;
+	private JButton btnJoinGame;
+	private JButton btnObserveGame;
 	private JTextField chatInputField;
 
 	private JTextArea chatArea;
@@ -188,21 +190,26 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			
 			
 			/*CREATE JOIN OBSERVE BUTTONS*/
-			JButton btnNewButton = new JButton("Create Game");
-			btnNewButton.setFont(new Font("Rockwell", Font.BOLD, 15));
-			btnNewButton.setBounds(10, 11, 172, 42);
-			contentPane.add(btnNewButton);
+			btnCreateGame = new JButton("Create Game");
+			btnCreateGame.setFont(new Font("Rockwell", Font.BOLD, 15));
+			btnCreateGame.setBounds(10, 11, 172, 42);
+			contentPane.add(btnCreateGame);
 			
-			JButton btnJoinGame = new JButton("Join Game");
+			btnJoinGame = new JButton("Join Game");
 			btnJoinGame.setFont(new Font("Rockwell", Font.BOLD, 15));
 			btnJoinGame.setBounds(10, 63, 172, 42);
 			contentPane.add(btnJoinGame);
 			
-			JButton btnObserveGame = new JButton("Observe Game");
+			btnObserveGame = new JButton("Observe Game");
 			btnObserveGame.setFont(new Font("Rockwell", Font.BOLD, 15));
 			btnObserveGame.setBounds(10, 116, 172, 42);
 			contentPane.add(btnObserveGame);
+			
+			
+			
 			setActionListeners();
+			
+			
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent evt) {
 					try{
@@ -230,9 +237,31 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 				inputSubmit();
 			}
 		});
+		/*Set action listeners for the Create/Join/Observe game buttons.*/
+		btnCreateGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+			//	inputSubmit();
+			}
+		});
+		btnJoinGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+			//	inputSubmit();
+			}
+		});
+		btnObserveGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+			//	inputSubmit();
+			}
+		});
 	}
 		
 	// Event for submitButton and ENTER key
+	/*
+	 * Called by the submit button ACTION.
+	 * Takes the text in the chatInputField and take one of these steps:
+	 * --If not connected, attempt to connect and all circumstances are caught
+	 * --If connected, then send message to chatroom OR send a private message.
+	 * */
 	private void inputSubmit(){
 		try{
 			System.out.println("Submit buttons was pressed.");
