@@ -1,8 +1,9 @@
 SoftwareEngineering
 ===================
 
-HOW TO:
-SERVER COMPILE in Visual Studio:
+==HOW TO:
+
+==SERVER COMPILE in Visual Studio:
 
 Download and install visual studio (express or pro..) c#.
 
@@ -19,7 +20,9 @@ There should be the IP to connect to the server in the GUi window at the top.
 **You shoulden't need to make changes to this project since the basic one is in his office.
 
 
-CLIENT
+
+
+==CLIENT
 Open up eclipse.
 
 Launch the project. 
@@ -38,8 +41,9 @@ start the CheckersLobby.java
 
 **To edit the project, OPEN WITH client/checkers lobby.java AS WINDOW BUILDER
 
-From Scratch: 
-SERVER COMPILE in Visual Studio:
+==From Scratch: 
+
+==SERVER COMPILE in Visual Studio:
 
 Download and install visual studio (express or pro..) c#.
 
