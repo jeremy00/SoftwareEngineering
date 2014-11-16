@@ -199,8 +199,6 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			});
 			{
 			}
-			pack();
-			this.setSize(238, 35);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
