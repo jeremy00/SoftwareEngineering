@@ -204,6 +204,8 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		}
 	}
 	
+	
+	/*Set the submit button up to listen for a click and launch inputSubmit when it happens.*/
 	public void setActionListeners(){
 		submitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -287,7 +289,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		return chatArea;
 	}
 	private JTextField getChatInputField() {
-		if (chatInputField == null) {
+		
 			chatInputField = new JTextField("130.108.28.165");
 			chatInputField.setScrollOffset(1);
 			chatInputField.setPreferredSize(new java.awt.Dimension(389, 29));
@@ -298,32 +300,32 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 						inputSubmit();
 				}
 			});
-		}
+		
 		return chatInputField;
 	}
 	private JButton getSubmitButton() {
-		if (submitButton == null) {
-			submitButton = new JButton();
-			submitButton.setText("Enter");
-			submitButton.setBackground(new java.awt.Color(255,64,64));
-			submitButton.setBackground(new java.awt.Color(235,233,237));
-			submitButton.setPreferredSize(new java.awt.Dimension(61, 31));
-			
-		}
-		submitButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				inputSubmit();
-			}
-		});
+//		if (submitButton == null) {
+//			submitButton = new JButton();
+//			submitButton.setText("Enter");
+//			submitButton.setBackground(new java.awt.Color(255,64,64));
+//			submitButton.setBackground(new java.awt.Color(235,233,237));
+//			submitButton.setPreferredSize(new java.awt.Dimension(61, 31));
+//			
+//		}
+//		submitButton.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent evt) {
+//				inputSubmit();
+//			}
+//		});
 		return submitButton;
 	}	
 	private JTabbedPane getJTabbedPane() {
-		if(jTabbedPane == null) {
-			jTabbedPane = new JTabbedPane();
-			jTabbedPane.setPreferredSize(new java.awt.Dimension(163, 250));
-			jTabbedPane.addTab("Users", null, getUserPane(), null);
-			//jTabbedPane.addTab("Tables", null, getTablePane(), null);
-		}
+//		if(jTabbedPane == null) {
+//			jTabbedPane = new JTabbedPane();
+//			jTabbedPane.setPreferredSize(new java.awt.Dimension(163, 250));
+//			jTabbedPane.addTab("Users", null, getUserPane(), null);
+//			//jTabbedPane.addTab("Tables", null, getTablePane(), null);
+//		}
 		return jTabbedPane;
 	}
 	private JScrollPane getUserPane() {
@@ -341,6 +343,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			userListPane.setBackground(new java.awt.Color(255,255,255));
 			userListPane.setFont(new java.awt.Font("Tahoma",0,12));
 			userListPane.setModel(new DefaultComboBoxModel(userList));
+	
 			// Creates pop-up menu and menu item
 			final JPopupMenu popup = new JPopupMenu();
 			JMenuItem menuItem = new JMenuItem("Send a PM");
@@ -391,7 +394,11 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		}
 
 	/**
+	 * ***************************************
+	 * ***************************************
 	 * Methods satisfying the checkers client interface
+	 ****************************************
+	 ****************************************
 	 */
 	public void connectionOK() {
 		debugOutput("Server says connection OK!");
@@ -522,8 +529,11 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	}
 	
 
-    /** 
+    /***************************************
+     ****************************************
      * Error messages
+     ****************************************
+     ****************************************
      */
 	public void networkException(String msg) {
 		output("A network exception has occured. Connection lost.");

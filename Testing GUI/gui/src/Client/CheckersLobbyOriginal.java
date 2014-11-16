@@ -30,7 +30,7 @@ import javax.swing.*;
 * 
 */
 @SuppressWarnings({ "rawtypes", "unchecked", "serial" })
-public class CheckersLobby extends JFrame implements CheckersClient{
+public class CheckersLobbyOriginal extends JFrame implements CheckersClient{
 
 	{
 		//Set Look & Feel
@@ -65,7 +65,7 @@ public class CheckersLobby extends JFrame implements CheckersClient{
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {    
-				CheckersLobby tester = new CheckersLobby();
+				CheckersLobbyOriginal tester = new CheckersLobbyOriginal();
 				tester.setLocationRelativeTo(null);
 				tester.setVisible(true);
 				System.setProperty("java.security.policy","file:./src/Client/client.policy");
@@ -132,7 +132,7 @@ public class CheckersLobby extends JFrame implements CheckersClient{
 	    }
 	}	
 	
-	public CheckersLobby() {
+	public CheckersLobbyOriginal() {
 		super();
 		lobbyUserList = new ArrayList<String>();
 		curState = State.notConnected;
