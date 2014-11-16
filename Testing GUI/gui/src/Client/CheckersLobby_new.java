@@ -43,6 +43,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import java.awt.Font;
 
 public class CheckersLobby_new extends JFrame implements CheckersClient {
 
@@ -156,7 +157,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		try {
 			
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setBounds(100, 100, 523, 477);
+			setBounds(100, 100, 670, 477);
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 			setContentPane(contentPane);
@@ -164,26 +165,43 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			contentPane.setSize(500, 500);
 			
 			submitButton = new JButton("Submit");
-			submitButton.setBounds(435, 411, 70, 22);
+			submitButton.setBounds(574, 410, 70, 22);
 			contentPane.add(submitButton);
 			
 			chatArea = new JTextArea(conText);
 			chatArea.setForeground(Color.BLACK);
-			chatArea.setBounds(10, 157, 495, 239);
+			chatArea.setBounds(10, 169, 634, 214);
 			contentPane.add(chatArea);
 			
 			userListPane = new JList();
-			userListPane.setBounds(379, 11, 126, 122);
+			userListPane.setBounds(518, 11, 126, 147);
 			contentPane.add(userListPane);
 			
 			 tableList = new JTextArea();
-			tableList.setBounds(10, 15, 359, 131);
+			tableList.setBounds(194, 7, 314, 151);
 			contentPane.add(tableList);
 			
 			chatInputField = new JTextField("fe80::e945:8111:8e95:9e9d");
-			chatInputField.setBounds(10, 411, 419, 20);
+			chatInputField.setBounds(145, 411, 419, 20);
 			contentPane.add(chatInputField);
 			chatInputField.setColumns(10);
+			
+			
+			/*CREATE JOIN OBSERVE BUTTONS*/
+			JButton btnNewButton = new JButton("Create Game");
+			btnNewButton.setFont(new Font("Rockwell", Font.BOLD, 15));
+			btnNewButton.setBounds(10, 11, 172, 42);
+			contentPane.add(btnNewButton);
+			
+			JButton btnJoinGame = new JButton("Join Game");
+			btnJoinGame.setFont(new Font("Rockwell", Font.BOLD, 15));
+			btnJoinGame.setBounds(10, 63, 172, 42);
+			contentPane.add(btnJoinGame);
+			
+			JButton btnObserveGame = new JButton("Observe Game");
+			btnObserveGame.setFont(new Font("Rockwell", Font.BOLD, 15));
+			btnObserveGame.setBounds(10, 116, 172, 42);
+			contentPane.add(btnObserveGame);
 			setActionListeners();
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent evt) {
@@ -311,31 +329,31 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		
 		return chatInputField;
 	}
-	private JButton getSubmitButton() {
-//		if (submitButton == null) {
-//			submitButton = new JButton();
-//			submitButton.setText("Enter");
-//			submitButton.setBackground(new java.awt.Color(255,64,64));
-//			submitButton.setBackground(new java.awt.Color(235,233,237));
-//			submitButton.setPreferredSize(new java.awt.Dimension(61, 31));
-//			
-//		}
-//		submitButton.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent evt) {
-//				inputSubmit();
-//			}
-//		});
-		return submitButton;
-	}	
-	private JTabbedPane getJTabbedPane() {
-//		if(jTabbedPane == null) {
-//			jTabbedPane = new JTabbedPane();
-//			jTabbedPane.setPreferredSize(new java.awt.Dimension(163, 250));
-//			jTabbedPane.addTab("Users", null, getUserPane(), null);
-//			//jTabbedPane.addTab("Tables", null, getTablePane(), null);
-//		}
-		return jTabbedPane;
-	}
+//	private JButton getSubmitButton() {
+////		if (submitButton == null) {
+////			submitButton = new JButton();
+////			submitButton.setText("Enter");
+////			submitButton.setBackground(new java.awt.Color(255,64,64));
+////			submitButton.setBackground(new java.awt.Color(235,233,237));
+////			submitButton.setPreferredSize(new java.awt.Dimension(61, 31));
+////			
+////		}
+////		submitButton.addActionListener(new ActionListener() {
+////			public void actionPerformed(ActionEvent evt) {
+////				inputSubmit();
+////			}
+////		});
+//		return submitButton;
+//	}	
+//	private JTabbedPane getJTabbedPane() {
+////		if(jTabbedPane == null) {
+////			jTabbedPane = new JTabbedPane();
+////			jTabbedPane.setPreferredSize(new java.awt.Dimension(163, 250));
+////			jTabbedPane.addTab("Users", null, getUserPane(), null);
+////			//jTabbedPane.addTab("Tables", null, getTablePane(), null);
+////		}
+//		return jTabbedPane;
+//	}
 	private JScrollPane getUserPane() {
 		if(userPane == null) {
 			userPane = new JScrollPane(getUserListPane());
@@ -606,5 +624,4 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	public void notInLobby() {
 		output(">> You cannot perform that action from outside of the lobby.");
 	}
-	
 }
