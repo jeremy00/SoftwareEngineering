@@ -510,6 +510,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
     	
 	}
 	public void newTable(int t) {
+		serverConnection.makeTable(user);
 		
 	}
 	//alert that you have joined the table with id tid.
