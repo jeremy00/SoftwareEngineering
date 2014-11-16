@@ -51,6 +51,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private ArrayList<String> lobbyUserList; //string lists of users for output
 	private static RMIServerInterface serverConnection;
 	private static State curState;
+	private static String yourip = "fe80::e945:8111:8e95:9e9d" ;
 	private String conText = "To connect, enter <ip address> <username>"; //
 	private JList userListPane;
 	private JScrollPane userPane;
@@ -69,7 +70,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private boolean isCheckers;
 	private byte[][] curBoardState;
 	private boolean debug = false;	// set true for debug mode, which prints more messages.
-
+	private int[] tids;
 	private JPanel contentPane;
 	
 
@@ -183,7 +184,8 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			tableList.setBounds(194, 7, 314, 151);
 			contentPane.add(tableList);
 			
-			chatInputField = new JTextField("fe80::e945:8111:8e95:9e9d");
+			/*set chat input field as your ip (variable at beginnning of class*/
+			chatInputField = new JTextField(yourip);
 			chatInputField.setBounds(145, 411, 419, 20);
 			contentPane.add(chatInputField);
 			chatInputField.setColumns(10);
@@ -401,12 +403,12 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		if (userListPane == null) {
 			String[] userList = new String[lobbyUserList.size()];
 			lobbyUserList.toArray(userList);
-			userListPane = new JList();
-			userListPane.setModel(new DefaultComboBoxModel(userList));
-			userListPane.setBackground(new java.awt.Color(255,255,255));
-			userListPane.setFont(new java.awt.Font("Tahoma",0,12));
-			userListPane.setModel(new DefaultComboBoxModel(userList));
-	
+//			userListPane = new JList();
+//			userListPane.setModel(new DefaultComboBoxModel(userList));
+//			userListPane.setBackground(new java.awt.Color(255,255,255));
+//			userListPane.setFont(new java.awt.Font("Tahoma",0,12));
+//			userListPane.setModel(new DefaultComboBoxModel(userList));
+//	
 			// Creates pop-up menu and menu item
 			final JPopupMenu popup = new JPopupMenu();
 			JMenuItem menuItem = new JMenuItem("Send a PM");
@@ -449,7 +451,12 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	        chatArea.append(s + "\r\n");
 	        chatArea.setCaretPosition(chatArea.getDocument().getLength());
 		}
-		
+
+		// Helper method for outputing to the chat pane
+		private void outputTableList(String s){		
+	        tableList.append(s + "\r\n");
+	        tableList.setCaretPosition(this.tableList.getDocument().getLength());
+		}
 		// Forwards debug messages to output() if debugging is turned on
 		private void debugOutput(String s){
 			if (debug)
@@ -504,10 +511,12 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	}
 	//initial listing of tables
 	public void tableList(int[] tids) {
-		output("Listing Tables ");
+		
+		this.tids = tids;
 		for (int i = 0; i < tids.length ; i++)
-			output("table number:"  + tids[i]);
+			this.outputTableList("table number:"  + tids[i]);
 
+		
 	}
 	//an alert saying that a table state has changed. 
 	//this is received whenever anyone joins or leaves a table,
@@ -618,13 +627,13 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		output("The name requested is in use. Please choose another.");
 		output(conText);
 		curState = State.notConnected;
-	    chatInputField.setText("137.99.11.115 ");
+	    chatInputField.setText(yourip);
 	}
 	public void nameIllegal() throws RemoteException {
 		output("The name requested is illegal. Length must be > 0 and have no whitespace.");
 		output(conText);
 		curState = State.notConnected;
-	    chatInputField.setText("137.99.11.115 ");	
+	    chatInputField.setText(yourip);	
 	}
 	//the requested move is illegal.
 	public void illegalMove() {
