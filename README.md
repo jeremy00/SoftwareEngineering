@@ -2,7 +2,9 @@ SoftwareEngineering
 ===================
 
 
-****UPDATE. CheckersLobby_new.java is the file that I am editing the lobby with.
+****UPDATE. 
+
+            CheckersLobby_new.java is the file that I am editing the lobby with.
             
             CheckersLobbyOriginal is the file that Derek gave us.
             
