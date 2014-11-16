@@ -240,7 +240,15 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		/*Set action listeners for the Create/Join/Observe game buttons.*/
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-			//	inputSubmit();
+				output(">> Creating table");
+				try {
+					serverConnection.makeTable(myName);
+					
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					output("Coulden't create table");
+				}
+			//	newTable();
 			}
 		});
 		btnJoinGame.addActionListener(new ActionListener() {
@@ -496,6 +504,9 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	}
 	//initial listing of tables
 	public void tableList(int[] tids) {
+		output("Listing Tables ");
+		for (int i = 0; i < tids.length ; i++)
+			output("table number:"  + tids[i]);
 
 	}
 	//an alert saying that a table state has changed. 
@@ -510,7 +521,13 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
     	
 	}
 	public void newTable(int t) {
-		serverConnection.makeTable(user);
+		output("Creating table for " + myName);
+		try {
+			serverConnection.makeTable(myName);
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			debugOutput("Can't make new table at newTable()");
+		}
 		
 	}
 	//alert that you have joined the table with id tid.
