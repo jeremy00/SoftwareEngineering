@@ -1,0 +1,27 @@
+fe80::e945:8111:8e95:9e9d%25
+
+CheckersLobbyDefault is the original
+
+create table
+c send 103
+c r 202 with table id **New_tbl
+#1--client.newTable(Integer.parseInt(data[1]));
+
+
+c r 213 left lobby    **Out_Lobby
+#2--client.youLeftLobby();
+
+
+all cl recieve 217 (broadcasted leint left lobby message
+#3--case TCPMsg.NOW_LEFT_LOBBY:	client.nowLeftLobby(data[1]);
+
+
+5 clients recieves 210 (table joined)
+#4--case TCPMsg.TBL_JOINED:	client.joinedTable(Integer.parseInt(data[1]));
+
+
+
+6 all cleints recieve 219 broad table update
+#5 case TCPMsg.WHO_ON_TBL:		
+client.onTable(Integer.parseInt(data[1]), data[2], data[3]);
+					
