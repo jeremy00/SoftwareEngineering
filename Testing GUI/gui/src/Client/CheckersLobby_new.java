@@ -295,7 +295,10 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 				else {
 					myName = input[1];
 					System.out.print("welcome! ");
-					
+					this.btnCreateGame.setEnabled(true);
+					this.btnJoinGame.setEnabled(true);
+					this.btnObserveGame.setEnabled(true);
+				
 					chatArea.setText(">> Welcome, " + myName + "!\n");
 				}
 			}
