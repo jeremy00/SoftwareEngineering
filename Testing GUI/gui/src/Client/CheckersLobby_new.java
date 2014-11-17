@@ -71,6 +71,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private byte[][] curBoardState;
 	private boolean debug = false;	// set true for debug mode, which prints more messages.
 	private int[] tids;
+	private int currentTable;
 	private JPanel contentPane;
 	
 
@@ -193,16 +194,19 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			
 			/*CREATE JOIN OBSERVE BUTTONS*/
 			btnCreateGame = new JButton("Create Game");
+			btnCreateGame.setEnabled(false);
 			btnCreateGame.setFont(new Font("Rockwell", Font.BOLD, 15));
 			btnCreateGame.setBounds(10, 11, 172, 42);
 			contentPane.add(btnCreateGame);
 			
 			btnJoinGame = new JButton("Join Game");
+			btnJoinGame.setEnabled(false);
 			btnJoinGame.setFont(new Font("Rockwell", Font.BOLD, 15));
 			btnJoinGame.setBounds(10, 63, 172, 42);
 			contentPane.add(btnJoinGame);
 			
 			btnObserveGame = new JButton("Observe Game");
+			btnObserveGame.setEnabled(false);
 			btnObserveGame.setFont(new Font("Rockwell", Font.BOLD, 15));
 			btnObserveGame.setBounds(10, 116, 172, 42);
 			contentPane.add(btnObserveGame);
@@ -210,7 +214,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			
 			
 			setActionListeners();
-			
+			outputTableList("Table List: ");
 			
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent evt) {
@@ -247,10 +251,9 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 					serverConnection.makeTable(myName);
 					
 				} catch (RemoteException e) {
-					// TODO Auto-generated catch block
+					
 					output("Coulden't create table");
 				}
-			//	newTable();
 			}
 		});
 		btnJoinGame.addActionListener(new ActionListener() {
@@ -512,17 +515,18 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	//initial listing of tables
 	public void tableList(int[] tids) {
 		
+		/*Called when program starts(by outside) to populate the table list*/
 		this.tids = tids;
 		for (int i = 0; i < tids.length ; i++)
-			this.outputTableList("table number:"  + tids[i]);
+			outputTableList(String.valueOf(tids[i]));
 
-		
 	}
 	//an alert saying that a table state has changed. 
 	//this is received whenever anyone joins or leaves a table,
 	//or if table state is queried by calling getTblStatus()
 	public void onTable(int tid, String blackSeat, String redSeat) {
-		
+	currentTable = tid;
+		//tableGame(
 	}
 	//same preconditions as onTable()
 	//called immediately after onTable()
