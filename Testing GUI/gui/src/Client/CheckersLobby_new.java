@@ -169,7 +169,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			contentPane.setSize(500, 500);
 			
 			submitButton = new JButton("Submit");
-			submitButton.setBounds(574, 410, 70, 22);
+			submitButton.setBounds(518, 410, 126, 22);
 			contentPane.add(submitButton);
 			
 			chatArea = new JTextArea(conText);
@@ -187,14 +187,13 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			
 			/*set chat input field as your ip (variable at beginnning of class*/
 			chatInputField = new JTextField(yourip);
-			chatInputField.setBounds(145, 411, 419, 20);
+			chatInputField.setBounds(10, 411, 501, 20);
 			contentPane.add(chatInputField);
 			chatInputField.setColumns(10);
 			
 			
 			/*CREATE JOIN OBSERVE BUTTONS*/
 			btnCreateGame = new JButton("Create Game");
-			btnCreateGame.setEnabled(false);
 			btnCreateGame.setFont(new Font("Rockwell", Font.BOLD, 15));
 			btnCreateGame.setBounds(10, 11, 172, 42);
 			contentPane.add(btnCreateGame);

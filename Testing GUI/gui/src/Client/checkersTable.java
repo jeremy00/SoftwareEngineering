@@ -3,6 +3,7 @@ package Client;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.Rectangle;
 
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JTextArea;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
@@ -24,12 +26,17 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 //import javax.swing.text.html.AccessibleHTML.TableElementInfo.TableAccessibleContext;
 
+
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JLabel;
 import javax.swing.border.LineBorder;
 import javax.swing.ListSelectionModel;
+
+import java.awt.Font;
+import java.awt.Panel;
 
 public class checkersTable extends JFrame {
 
@@ -83,63 +90,34 @@ public class checkersTable extends JFrame {
 		
 		
 		JList list = new JList();
-		list.setBounds(512, 65, 126, 147);
+		list.setBounds(509, 97, 126, 147);
 		contentPane.add(list);
 		
-		table = new JTable(){
-			public Component prepareRenderer(TableCellRenderer r, int rw, int col)
-			{
-				Component c = super.prepareRenderer(r, rw,  col);
-				c.setBackground(Color.WHITE);
-				if (col==0){
-					c.setBackground(Color.GREEN);
-				}
-				return c;
-			}
-		};
-		
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setCellSelectionEnabled(true);
-		table.setBorder(new LineBorder(new Color(0, 0, 0)));
-		
-		
-		
-		
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-				{null, null, null, null, null, null, null, null},
-			},
-			new String[] {
-				"New column", "New column", "New column", "New column", "New column", "New column", "New column", "New column"
-			}
-		));
-		
-		
-		
-		table.setBounds(107, 84, 388, 128);
-		contentPane.add(table);
-		
 		JButton btnLeave = new JButton("Leave");
-		btnLeave.setBounds(0, 159, 89, 23);
+		btnLeave.setFont(new Font("Tahoma", Font.BOLD, 14));
+		btnLeave.setBounds(0, 159, 113, 34);
 		contentPane.add(btnLeave);
 		
 		JButton button = new JButton("Surrender");		
-		button.setBounds(0, 125, 89, 23);
+		button.setFont(new Font("Tahoma", Font.BOLD, 14));
+		button.setBounds(0, 102, 113, 46);
 		contentPane.add(button);
 		
-		JLabel lblTable = new JLabel("table #");
-		lblTable.setBounds(113, 11, 46, 14);
+		JLabel lblTable = new JLabel("Table #: 5532");
+		lblTable.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblTable.setBounds(113, 11, 262, 24);
 		contentPane.add(lblTable);
 		
 		JLabel lblRedsTurn = new JLabel("Red's Turn");
-		lblRedsTurn.setBounds(113, 46, 46, 14);
+		lblRedsTurn.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblRedsTurn.setBounds(113, 32, 262, 24);
 		contentPane.add(lblRedsTurn);
+		
+		table = new JTable();
+		table.setBounds(140, 66, 355, 178);
+		
+		contentPane.add(table);
+		
+		
 	}
 }
