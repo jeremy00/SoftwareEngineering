@@ -8,6 +8,7 @@ public class piece extends JLabel{
 
 	int x;
 	int y;
+	String color;
 	final int X_SIZE_IMAGE = 40;
 	final int Y_SIZE_IMAGE = 40;
 	int yDiff =53;//difference in spots on the board
@@ -15,16 +16,20 @@ public class piece extends JLabel{
 	//int tableX, tableY;
 	JLabel table;//the parent table
 	
-	piece(boolean red, JLabel table){
+	piece(int red, JLabel table){
 try{
 	this.table = table;
 		x = 0;
 		y = 0;
 		//set the image icon of the JLabel, dependent on constructor param red
-		if (red) this.setIcon(new ImageIcon(piece.class.getResource("/Client/red.png")));    
-		else this.setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));
-        
-		System.out.println("piece x: " + x  +" piece y: " + y)	;
+		if (red==1){
+			color = "red";
+			this.setIcon(new ImageIcon(piece.class.getResource("/Client/red.png")));  }  
+		else if (red == 2)
+		{
+			color="black";
+			this.setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));}
+		else color = "empty";
 		this.setBounds(x, y, X_SIZE_IMAGE, Y_SIZE_IMAGE);//set the position 
 //		  table.setHorizontalAlignment(SwingConstants.);
 	
@@ -42,7 +47,22 @@ public void setPiece(int boardX, int boardY){
 	this.x = (yDiff*boardY);
 	
 	this.setLocation(x, y);//set the location of the JLabel on the table
-	System.out.format("x: %d y: %d", x,y);
+	//System.out.format("x: %d y: %d", x,y);
 }
+
+public void setSelected(){
+	if (color=="black")
+	setIcon(new ImageIcon(piece.class.getResource("/Client/black_selected.png")));
+	else     if (color=="red")
+    	setIcon(new ImageIcon(piece.class.getResource("/Client/red_selected.png")));
 	
+}
+
+public void setUnSelected(){
+	if (color=="black")
+	setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));
+	else if (color=="red")
+    	setIcon(new ImageIcon(piece.class.getResource("/Client/red.png")));
+	
+}
 }

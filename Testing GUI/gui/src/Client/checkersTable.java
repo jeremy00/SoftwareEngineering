@@ -1,6 +1,8 @@
 package Client;
 
+import java.awt.Component;
 import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -8,11 +10,16 @@ import javax.swing.JLabel;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
+
 import java.awt.Color;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JList;
+
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 //TOP LEFT IS 0,0
@@ -25,6 +32,7 @@ public class checkersTable extends JFrame {
 	private JLabel lblUserList, lblTableNum,lblConsole, table;
 	private piece[][] piecesArray;
 	private JTextArea ChatArea;
+	private piece selectedPiece = new piece(0, table);
 
 	/**
 	 * Launch the applicat	ion.
@@ -46,12 +54,10 @@ public class checkersTable extends JFrame {
 	 * Create the frame.
 	 */
 	public checkersTable() {
-		piecesArray = new piece[8][8];
-		
+		piecesArray = new piece[8][8];	
 		setGUI();
 		setTable();
 
-		
 	}
 public void setGUI(){
 	//Setup the JPANEL
@@ -65,6 +71,38 @@ public void setGUI(){
 	//Set all of the options, then add it to the panel
 	//Table
 	table = new javax.swing.JLabel();
+	table.addMouseListener(new MouseAdapter() {
+
+		
+		@Override
+		public void mouseClicked(MouseEvent mouseClick) {
+	try{
+			System.out.println("mouse click x: " + mouseClick.getX()+ "  mouse click y: " + mouseClick.getY());
+			System.out.println(findPiece(mouseClick.getX(), mouseClick.getY()).color);
+			//find the piece that the user clicked
+		piece newPiece = findPiece(mouseClick.getX(), mouseClick.getY());
+
+		///If the piece is a valid piece
+		if(newPiece.color != "empty" || selectedPiece == null)
+		{
+		//Set the current selected piece back to normal
+		selectedPiece.setUnSelected();
+		selectedPiece = newPiece; //make new piece the selected
+		selectedPiece.setSelected();//set the new piece as selected
+		}//end if
+		else if (selectedPiece != null && newPiece.color == " empty")
+		{
+			System.out.print("move somewhere else");
+		}	
+	}
+	catch(Exception e){
+		System.out.print("Error at mouse click event" + e.toString());
+		
+	}
+		}//end mouse click method
+	});
+	
+	
 	table.setHorizontalAlignment(SwingConstants.TRAILING);
 	table.setBounds(187, 83, 408, 404);
 	table.setIcon(new ImageIcon(checkersTable.class
@@ -130,18 +168,18 @@ public void setGUI(){
 	// Set the table up for the first run.
 	//Runs from the top left to the bottom right.
 	public void setTable() {
-		boolean red = true;// if the piece is red, then it's true
+		int red = 1;// if the piece is red, then it's true
 
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				
 				//Set first three rows, stop, then set last three rows
 				if (i < 3)
-					red = true;
+					red =1;
 				else if (i > 4)
-					red = false;
+					red =2;
 				else
-					break;
+					red = 0;
 
 				//If it's a checkers position that needs a piece.
 				if (i % 2 == 0 && j % 2 == 0){
@@ -152,13 +190,14 @@ public void setGUI(){
 					
 					setTablePiece(i, j, red);
 			}
+				else setTablePiece(i,j, 0);
 			}// end row
 		}
 	}
 
 	//called by setTable()
 	//Creates a new piece by taking in the row, col, and if the piece is red/black.
-	public void setTablePiece(int i, int j, boolean red) {
+	public void setTablePiece(int i, int j, int red) {
 		piece p = new piece(red, table);
 		p.setPiece(i, j);
 		table.add(p);//add the the GUI
@@ -171,4 +210,18 @@ public void setGUI(){
 		//set the piece when it's been moved..
 		piecesArray[toRow-1][toCol-1].setPiece(toRow, toCol);
 	}
+	
+	public piece findPiece(int posX, int posY){
+		
+		
+		//each step is 50px apart.
+		//so divide them by 50 and throw the response to the array to be changed.
+		int x = posX/50;
+		int y = posY/50;
+		
+		return piecesArray[y][x];
+//			System.out.println("Position x: " + x +" Position y: "+ y + "color: "+ piecesArray[y][x].color + "spot: " +piecesArray[x][y].x + " " +piecesArray[x][y].x);
+		
+	}
+	
 }
