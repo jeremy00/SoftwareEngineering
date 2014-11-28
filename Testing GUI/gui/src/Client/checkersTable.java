@@ -67,8 +67,7 @@ public class checkersTable extends JFrame {
 		contentPane.setLayout(null);
 		          
 		          
-		          
-		           //JLabel    table = new javax.swing.JLabel();
+		             table = new javax.swing.JLabel();
 		           
 		           table.setHorizontalAlignment(SwingConstants.TRAILING);
 		           table.setBounds(20, 11, 408, 404);
@@ -76,7 +75,7 @@ public class checkersTable extends JFrame {
 		           
 		               table.setIcon(new javax.swing.ImageIcon("C:\\Users\\Meri\\Desktop\\ds32352.gif"));
 		               contentPane.add(table);
-		             
+		             setTable();
 		            
 		             
 		     System.out.println("add piece");
@@ -84,9 +83,28 @@ public class checkersTable extends JFrame {
 	}
 	
 	public void setTable(){
-		  piece p = new piece(true, table);
-          
-          table.add(p);
+		boolean red= true;
+		for(int i = 0; i < 8; i++){
+			System.out.println("!!! "+i);
+			for(int j = 0; j < 8; j++){
+				if(i<3) red= true;
+				else if (i>4) red = false;
+				else break;
+				
+		if (i%2==0 && j%2==0)
+				setTablePiece(i,j, red);
+		
+		else if (i%2==1 && j%2==1)
+		 		setTablePiece(i,j, red);
+		}//end row
+}
+			}
+	
+	
+	public void setTablePiece(int i, int j, boolean red){
+		piece p = new piece(red, table);          
+		  p.setPiece(i, j);
+		  table.add(p);
 	}
 	
 }
