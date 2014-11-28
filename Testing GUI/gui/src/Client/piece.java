@@ -17,17 +17,25 @@ public class piece extends JLabel{
 	
 	String pathIcon;
 	piece(boolean red, JLabel table){
-		this.table = table;
+try{
+	this.table = table;
 	//	tableX = table.getX();//retrieve the table coords
 	//	tableY = table.getX();
 		x = 0;
 		y = 0;
 		//set the image icon of the JLabel
-		if (red)this.setIcon(new ImageIcon("C:\\Users\\Meri\\Desktop\\red.png"));
-		else this.setIcon(new ImageIcon("C:\\Users\\Meri\\Desktop\\black.png"));
+		if (red) this.setIcon(new ImageIcon(piece.class.getResource("/Client/red.png")));
+        
+		else this.setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));
+        
 		System.out.println("piece x: " + x  +" piece y: " + y)	;
 		this.setBounds(x, y, 40, 40);//set the position 
 //		  table.setHorizontalAlignment(SwingConstants.);
+	
+}
+catch(Exception e){
+	System.out.println("Error in the piece contstructor, probably image issue " + e);
+}
 	}
 	
 	//set the position of the checkers piece using 

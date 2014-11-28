@@ -73,8 +73,8 @@ public class checkersTable extends JFrame {
 		           table.setBounds(20, 11, 408, 404);
 		           
 		           
-		               table.setIcon(new javax.swing.ImageIcon("C:\\Users\\Meri\\Desktop\\ds32352.gif"));
-		               contentPane.add(table);
+		           table.setIcon(new ImageIcon(checkersTable.class.getResource("/Client/table.gif")));
+		                   contentPane.add(table);
 		             setTable();
 		            
 		             
