@@ -1,35 +1,31 @@
 package Client;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
-//set 
+//Called by table to add a piece to the table.
 public class piece extends JLabel{
-	JLabel pieceLabel;
+
 	int x;
 	int y;
+	final int X_SIZE_IMAGE = 40;
+	final int Y_SIZE_IMAGE = 40;
 	int yDiff =53;//difference in spots on the board
 	int xDiff =50;//difference in spots on the board
 	//int tableX, tableY;
-	JLabel table;
+	JLabel table;//the parent table
 	
-	String pathIcon;
 	piece(boolean red, JLabel table){
 try{
 	this.table = table;
-	//	tableX = table.getX();//retrieve the table coords
-	//	tableY = table.getX();
 		x = 0;
 		y = 0;
-		//set the image icon of the JLabel
-		if (red) this.setIcon(new ImageIcon(piece.class.getResource("/Client/red.png")));
-        
+		//set the image icon of the JLabel, dependent on constructor param red
+		if (red) this.setIcon(new ImageIcon(piece.class.getResource("/Client/red.png")));    
 		else this.setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));
         
 		System.out.println("piece x: " + x  +" piece y: " + y)	;
-		this.setBounds(x, y, 40, 40);//set the position 
+		this.setBounds(x, y, X_SIZE_IMAGE, Y_SIZE_IMAGE);//set the position 
 //		  table.setHorizontalAlignment(SwingConstants.);
 	
 }

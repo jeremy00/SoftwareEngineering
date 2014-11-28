@@ -1,36 +1,10 @@
 package Client;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.EventQueue;
-import java.awt.Rectangle;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextArea;
-
-import java.awt.Color;
-
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JList;
-
-import java.awt.GridLayout;
-
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-//import javax.swing.text.html.AccessibleHTML.TableElementInfo.TableAccessibleContext;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import javax.swing.JLabel;
-import javax.swing.border.LineBorder;
-import javax.swing.ListSelectionModel;
-import java.awt.FlowLayout;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
@@ -65,46 +39,53 @@ public class checkersTable extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		          
-		          
-		             table = new javax.swing.JLabel();
-		           
-		           table.setHorizontalAlignment(SwingConstants.TRAILING);
-		           table.setBounds(20, 11, 408, 404);
-		           
-		           
-		           table.setIcon(new ImageIcon(checkersTable.class.getResource("/Client/table.gif")));
-		                   contentPane.add(table);
-		             setTable();
-		            
-		             
-		     System.out.println("add piece");
-		     
+
+		table = new javax.swing.JLabel();
+
+		table.setHorizontalAlignment(SwingConstants.TRAILING);
+		table.setBounds(20, 11, 408, 404);
+
+		table.setIcon(new ImageIcon(checkersTable.class
+				.getResource("/Client/table.gif")));
+		contentPane.add(table);
+		setTable();
+
+		System.out.println("add piece");
+
 	}
-	
-	public void setTable(){
-		boolean red= true;
-		for(int i = 0; i < 8; i++){
-			System.out.println("!!! "+i);
-			for(int j = 0; j < 8; j++){
-				if(i<3) red= true;
-				else if (i>4) red = false;
-				else break;
-				
-		if (i%2==0 && j%2==0)
-				setTablePiece(i,j, red);
-		
-		else if (i%2==1 && j%2==1)
-		 		setTablePiece(i,j, red);
-		}//end row
-}
-			}
-	
-	
-	public void setTablePiece(int i, int j, boolean red){
-		piece p = new piece(red, table);          
-		  p.setPiece(i, j);
-		  table.add(p);
+
+	// Set the table up for the first run.
+	//Runs from the top left to the bottom right.
+	public void setTable() {
+		boolean red = true;// if the piece is red, then it's true
+
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+
+				//Set first three rows, stop, then set last three rows
+				if (i < 3)
+					red = true;
+				else if (i > 4)
+					red = false;
+				else
+					break;
+
+				//If it's a checkers position that needs a piece.
+				if (i % 2 == 0 && j % 2 == 0)
+					setTablePiece(i, j, red);
+
+				else if (i % 2 == 1 && j % 2 == 1)
+					setTablePiece(i, j, red);
+			}// end row
+		}
 	}
-	
+
+	//called by setTable()
+	//Creates a new piece by taking in the row, col, and if the piece is red/black.
+	public void setTablePiece(int i, int j, boolean red) {
+		piece p = new piece(red, table);
+		p.setPiece(i, j);
+		table.add(p);//add the the GUI
+	}
+
 }
