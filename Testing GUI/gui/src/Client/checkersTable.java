@@ -21,12 +21,13 @@ public class checkersTable extends JFrame {
 	private JPanel contentPane;
 	private JTextField ChatInputField;
 	private JList UserList;
-	private JButton btnStart,btnLeave;
+	private JButton btnStart,btnLeave, btnSubmit;
 	private JLabel lblUserList, lblTableNum,lblConsole, table;
 	private piece[][] piecesArray;
+	private JTextArea ChatArea;
 
 	/**
-	 * Launch the application.
+	 * Launch the applicat	ion.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -45,7 +46,7 @@ public class checkersTable extends JFrame {
 	 * Create the frame.
 	 */
 	public checkersTable() {
-		piecesArray = new piece[7][7];
+		piecesArray = new piece[8][8];
 		
 		setGUI();
 		setTable();
@@ -75,12 +76,12 @@ public void setGUI(){
 	ChatInputField.setBounds(10, 652, 585, 20);
 	
 	//Submit Button
-	JButton btnSubmit = new JButton("Submit");
+	btnSubmit = new JButton("Submit");
 	btnSubmit.setFont(new Font("Times New Roman", Font.BOLD, 15));
 	btnSubmit.setBounds(619, 651, 155, 35);
 	
 	//Chat Area
-	JTextArea ChatArea = new JTextArea("");
+	ChatArea = new JTextArea("");
 	ChatArea.setForeground(Color.BLACK);
 	ChatArea.setBounds(10, 498, 764, 143);
 	
