@@ -3,7 +3,7 @@ package Client;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-//Called by table to add a piece to the table.
+//Called by board to add a piece to the board.
 public class piece extends JLabel{
 
 	int x;
@@ -13,12 +13,12 @@ public class piece extends JLabel{
 	final int Y_SIZE_IMAGE = 40;
 	int yDiff =53;//difference in spots on the board
 	int xDiff =50;//difference in spots on the board
-	//int tableX, tableY;
-	JLabel table;//the parent table
+	//int boardX, boardY;
+	JLabel board;//the parent board
 	
-	piece(int red, JLabel table){
+	piece(int red, JLabel board){
 try{
-	this.table = table;
+	this.board = board;
 		x = 0;
 		y = 0;
 		//set the image icon of the JLabel, dependent on constructor param red
@@ -31,7 +31,7 @@ try{
 			this.setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));}
 		else color = "empty";
 		this.setBounds(x, y, X_SIZE_IMAGE, Y_SIZE_IMAGE);//set the position 
-//		  table.setHorizontalAlignment(SwingConstants.);
+//		  board.setHorizontalAlignment(SwingConstants.);
 	
 }
 catch(Exception e){
@@ -42,14 +42,16 @@ catch(Exception e){
 	//set the position of the checkers piece using 
 	//@param boardX and boardY are the coordinates on the board
 public void setPiece(int boardX, int boardY){
-	this.y =  (xDiff*boardX);//get the tables init coords
+	this.y =  (xDiff*boardX);//get the boards init coords
 								//add the diff(between spots) * that spot on the board (0-8)
 	this.x = (yDiff*boardY);
 	
-	this.setLocation(x, y);//set the location of the JLabel on the table
+	this.setLocation(x, y);//set the location of the JLabel on the board
 	//System.out.format("x: %d y: %d", x,y);
 }
 
+
+//Called when the piece is selected
 public void setSelected(){
 	if (color=="black")
 	setIcon(new ImageIcon(piece.class.getResource("/Client/black_selected.png")));
@@ -58,6 +60,7 @@ public void setSelected(){
 	
 }
 
+//Called when the piece is unselected
 public void setUnSelected(){
 	if (color=="black")
 	setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));
