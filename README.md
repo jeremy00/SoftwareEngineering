@@ -1,32 +1,26 @@
 SoftwareEngineering
-===================
+--------
 
 
-****UPDATE. 
-
-            CheckersLobby_new.java is the file that I am editing the lobby with.
-            
-            CheckersLobbyOriginal is the file that Derek gave us.
-            
+> UPDATE.
+* CheckersLobby_new.java is the file that I am editing the lobby with.
+* CheckersLobbyOriginal is the file that Derek gave us.
 
 
-==HOW TO:
+HOW TO
+-------------
 
-==SERVER COMPILE in Visual Studio:
+SERVER COMPILE in Visual Studio:
+---------
 
-Download and install visual studio (express or pro..) c#.
+1. Download and install visual studio (express or pro..) c#.
+2. Install the sql file (seserver/mysql-connector-net-6.9.4.msi)
+3. open seserver/se server.sln
+4. Build project
+	ServerGUI is the one you want to use.
+	There should be the IP to connect to the server in the GUi window at the top.
 
-Install the sql file (seserver/mysql-connector-net-6.9.4.msi)
-
-open seserver/se server.sln
-
-Build project
-
-ServerGUI is the one you want to use.
-
-There should be the IP to connect to the server in the GUi window at the top.
-
-**You shoulden't need to make changes to this project since the basic one is in his office.
+> Note: You shoulden't need to make changes to this project since the basic one is in his office.
 
 
 
