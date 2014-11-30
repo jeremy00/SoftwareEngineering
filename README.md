@@ -49,12 +49,12 @@ SERVER COMPILE in Visual Studio
 1. Drag and drop the files from derek doran (the one from bit bucket) server files
 2. Add reference (right click project, add reference) in the project
 
-		reference is at c:\program files\mysql\binaries\4.0 \ mysql data
+reference is at `c:\program files\mysql\binaries\4.0 \ mysql data`
 
-The program should compile+run
+The program should `compile+run`
 
 The serverGUI window will pop up and give you the IP to connect to the server
 
-Client: 
-
+Client
+---------
 see the project0.pdf documentation from pilot
