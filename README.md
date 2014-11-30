@@ -10,7 +10,7 @@ SoftwareEngineering
 HOW TO
 -------------
 
-SERVER COMPILE in Visual Studio:
+	SERVER COMPILE in Visual Studio
 ---------
 
 1. Download and install visual studio (express or pro..) c#.
