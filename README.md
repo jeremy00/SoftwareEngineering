@@ -22,10 +22,7 @@ HOW TO
 
 > Note: You shoulden't need to make changes to this project since the basic one is in his office.
 
-
-
-
-CLIENT
+	CLIENT
 ----
 1. Download eclipse
 2. Open up eclipse.
