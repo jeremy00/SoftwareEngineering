@@ -32,22 +32,24 @@ HOW TO
 6. start RMICONNECTION ENGINE
 7. start the CheckersLobby.java  (or whatever one I'm working on at the moment.. one of them is working. I'll update the readme when it's more official.)
 
-**To edit the project, OPEN WITH client/checkers lobby.java AS WINDOW BUILDER
+How To Edit The Project
+-------
+1. OPEN WITH client/checkers lobby.java AS WINDOW BUILDER
 
-==From Scratch: 
+	From Scratch
+-----
 
-==SERVER COMPILE in Visual Studio:
+SERVER COMPILE in Visual Studio
+------
+1. Download and install visual studio (express or pro..) c#.
+2. Install the sql file (TestingGUI/gui/mysql-connector-net-6.9.4.msi)
 
-Download and install visual studio (express or pro..) c#.
+	New project
+------
+1. Drag and drop the files from derek doran (the one from bit bucket) server files
+2. Add reference (right click project, add reference) in the project
 
-install the sql file (TestingGUI/gui/mysql-connector-net-6.9.4.msi)
-
-New project
-
-Drag and drop the files from derek doran (the one from bit bucket) server files
-
-Add reference (right click project, add reference) in the project
-reference is at c:\program files\mysql\binaries\4.0 \ mysql data
+		reference is at c:\program files\mysql\binaries\4.0 \ mysql data
 
 The program should compile+run
 
