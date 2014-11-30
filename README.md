@@ -25,22 +25,15 @@ SERVER COMPILE in Visual Studio:
 
 
 
-==CLIENT
-Open up eclipse.
-
-Launch the project. 
-
-Download eclipse
-
-Install window builder/swt in eclipse
-
-start rmiregistry in the project's bin folder (see the project 0 documentation for questions)
-
-start RMICONNECTION ENGINE
-
-start the CheckersLobby.java 
-
-**or whatever one i'm working on at the moment.. one of them is working. I'll update the readme when it's more official.
+CLIENT
+----
+1. Download eclipse
+2. Open up eclipse.
+3. Launch the project. 
+4. Install window builder/swt in eclipse
+5. start rmiregistry in the project's bin folder (see the project 0 documentation for questions)
+6. start RMICONNECTION ENGINE
+7. start the CheckersLobby.java  (or whatever one I'm working on at the moment.. one of them is working. I'll update the readme when it's more official.)
 
 **To edit the project, OPEN WITH client/checkers lobby.java AS WINDOW BUILDER
 
