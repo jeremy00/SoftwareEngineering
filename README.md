@@ -58,3 +58,10 @@ The serverGUI window will pop up and give you the IP to connect to the server
 Client
 ---------
 see the project0.pdf documentation from pilot
+
+
+Author(s) & Contributors
+----
+Jeremy May
+[Fadi Hanna Al-Kass](http://fadialkass.blogspot.com)
+Alex Wasser
