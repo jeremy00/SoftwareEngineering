@@ -23,7 +23,7 @@ import java.awt.event.MouseEvent;
 
 //TOP LEFT IS 0,0
 public class checkersTable extends JFrame {
-
+	private String tableName = "";
 	private JPanel contentPane;
 	private JTextField ChatInputField;
 	private JList UserList;
@@ -33,6 +33,25 @@ public class checkersTable extends JFrame {
 	private JTextArea ChatArea;
 	private piece selectedPiece = new piece(0, table);
 
+	
+	checkersTable(int tid){
+		
+		tableName = Integer.toString(tid);
+		piecesArray = new piece[8][8];
+		setGUI();
+		setTable();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					checkersTable frame = new checkersTable();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+	}
 	/**
 	 * Launch the applicat ion.
 	 */
@@ -149,7 +168,7 @@ public class checkersTable extends JFrame {
 		lblConsole = new JLabel("Start Game");
 		lblConsole.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblConsole.setBounds(230, 45, 322, 14);
-
+ 
 		// Now add everything to the table
 		contentPane.add(table);
 		contentPane.add(ChatInputField);
@@ -162,6 +181,9 @@ public class checkersTable extends JFrame {
 		contentPane.add(lblTableNum);
 		contentPane.add(lblConsole);
 
+		
+		//set table name
+	lblTableNum.setText("Table Num: #"+ tableName);
 	}
 
 	// Set the table up for the first run.
