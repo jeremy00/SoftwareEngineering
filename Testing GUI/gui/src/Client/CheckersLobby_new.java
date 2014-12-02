@@ -522,6 +522,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	}
 	public void newTable(int t) {
 		output("Creating table for " + myName);
+		checkersTable currentTable = new checkersTable(t);
 		try {
 			serverConnection.makeTable(myName);
 		} catch (RemoteException e) {
