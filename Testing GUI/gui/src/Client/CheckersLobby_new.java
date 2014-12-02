@@ -38,6 +38,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.Inet6Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -45,13 +48,19 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.awt.Font;
 
+import javax.swing.JLabel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.ListSelectionModel;
+
 public class CheckersLobby_new extends JFrame implements CheckersClient {
 
 	public enum State {notConnected, connected, inLobby, onTable, inGame};
 	private ArrayList<String> lobbyUserList; //string lists of users for output
+	private ArrayList<String> tableList; //String list of tables
 	private static RMIServerInterface serverConnection;
 	private static State curState;
-	private static String yourip = "fe80::e945:8111:8e95:9e9d" ;
+	private static String yourip = "fe80::108c:c728:1808:cec5" ;
 	private String conText = "To connect, enter <ip address> <username>"; //
 	private JList userListPane;
 	private JScrollPane userPane;
@@ -62,10 +71,10 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private JTextField chatInputField;
 
 	private JTextArea chatArea;
-	private JTextArea tableList;
+	private JList tableListPane;
 	private JScrollPane chatPane;
 	private String myName = "";
-	private String selectedUser = "";
+	private int selectedTable;
 	
 	private boolean isCheckers;
 	private byte[][] curBoardState;
@@ -73,6 +82,10 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private int[] tids;
 	private int currentTable;
 	private JPanel contentPane;
+	private final JScrollPane scrollPane = new JScrollPane();
+	private final JScrollPane scrollPane_1 = new JScrollPane();
+	private final JScrollPane scrollPane_2 = new JScrollPane();
+	private JLabel lblUserList;
 	
 
 	/**
@@ -153,6 +166,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	public CheckersLobby_new() {
 		super();
 		lobbyUserList = new ArrayList<String>();
+		tableList = new ArrayList<String>();
 		curState = State.notConnected;
 		initGUI();
 	}
@@ -172,21 +186,8 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			submitButton.setBounds(574, 410, 70, 22);
 			contentPane.add(submitButton);
 			
-			chatArea = new JTextArea(conText);
-			chatArea.setForeground(Color.BLACK);
-			chatArea.setBounds(10, 169, 634, 214);
-			contentPane.add(chatArea);
-			
-			userListPane = new JList();
-			userListPane.setBounds(518, 11, 126, 147);
-			contentPane.add(userListPane);
-			
-			 tableList = new JTextArea();
-			tableList.setBounds(194, 7, 314, 151);
-			contentPane.add(tableList);
-			
-			/*set chat input field as your ip (variable at beginnning of class*/
-			chatInputField = new JTextField(yourip);
+			/*set chat input field as your ip (variable at beginning of class*/
+			chatInputField = new JTextField(getLocalIPV6Address());
 			chatInputField.setBounds(145, 411, 419, 20);
 			contentPane.add(chatInputField);
 			chatInputField.setColumns(10);
@@ -210,11 +211,35 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			btnObserveGame.setFont(new Font("Rockwell", Font.BOLD, 15));
 			btnObserveGame.setBounds(10, 116, 172, 42);
 			contentPane.add(btnObserveGame);
+			scrollPane.setBounds(10, 169, 634, 230);
+			contentPane.add(scrollPane);
+			
+			chatArea = new JTextArea(conText);
+			scrollPane.setViewportView(chatArea);
+			chatArea.setForeground(Color.BLACK);
+			scrollPane_1.setBounds(192, 11, 270, 147);
+			contentPane.add(scrollPane_1);
+			
+			 tableListPane = new JList();
+			 tableListPane.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			 
+			 scrollPane_1.setViewportView(tableListPane);
+			 
+			 JLabel lblTableList = new JLabel("Table List:");
+			 scrollPane_1.setColumnHeaderView(lblTableList);
+			 scrollPane_2.setBounds(472, 11, 172, 147);
+			 contentPane.add(scrollPane_2);
+			 
+			 userListPane = new JList();
+			 userListPane.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			 scrollPane_2.setViewportView(userListPane);
+			 
+			 lblUserList = new JLabel("User List:");
+			 scrollPane_2.setColumnHeaderView(lblUserList);
 			
 			
 			
 			setActionListeners();
-			outputTableList("Table List: ");
 			
 			this.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent evt) {
@@ -252,7 +277,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 					
 				} catch (RemoteException e) {
 					
-					output("Coulden't create table");
+					output("Couldn't create table");
 				}
 			}
 		});
@@ -266,6 +291,59 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			//	inputSubmit();
 			}
 		});
+		
+		//Set key listeners for the chat field
+		chatInputField.addKeyListener(new KeyAdapter() {
+			//This bit of magic auto-fills users when using the @user.
+			//Press tab to quickly get to the end of the username.
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				//Check to see if char[0] = '@'
+				String input = chatInputField.getText();
+				if (input.matches("@\\S+")) {
+					int caretPos = chatInputField.getCaretPosition();
+					chatInputField.setFocusTraversalKeysEnabled(false);
+					//Choose user from lobbyUserList which matches entered chars
+					for (String user : lobbyUserList) {
+						if (user.startsWith(input.substring(1, caretPos))) {
+							//auto-fill user, while leaving the cursor at the same spot
+							chatInputField.setText("@" + user);
+							chatInputField.setCaretPosition(caretPos);
+							break;
+						}
+					}
+				} else {
+					chatInputField.setFocusTraversalKeysEnabled(true);
+				}
+			}
+			@Override
+			public void keyPressed(KeyEvent e) {
+				switch (e.getKeyCode()) {
+				case 9: //tab
+					String input = chatInputField.getText();
+					chatInputField.setText(input + " ");
+					chatInputField.setCaretPosition(input.length()+1);
+					chatInputField.setFocusTraversalKeysEnabled(true);
+					break;
+				case 10: //enter
+				case 13:
+					inputSubmit();
+					break;
+				}
+			}
+		});
+		
+		tableListPane.addListSelectionListener(new ListSelectionListener() {
+		 	public void valueChanged(ListSelectionEvent e) {
+		 		int selected = tableListPane.getSelectedIndex();
+		 		selectedTable = tids[selected];
+		 		try {
+		 			serverConnection.getTblStatus(myName, selectedTable);
+	 			} catch (RemoteException ex) {
+					output("Error getting status of table " + selectedTable);
+				}
+		 	}
+		 });
 	}
 		
 	// Event for submitButton and ENTER key
@@ -277,7 +355,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	 * */
 	private void inputSubmit(){
 		try{
-			System.out.println("Submit buttons was pressed.");
+			System.out.println("Submit button was pressed.");
 			
 			//IF user is NOT CONNECTED
 			if(curState.equals(State.notConnected)){
@@ -294,7 +372,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 				//SUCCESSFUL CONNECTION, tell user welcome.
 				else {
 					myName = input[1];
-					System.out.print("welcome! ");
+					System.out.println("welcome!");
 					this.btnCreateGame.setEnabled(true);
 					this.btnJoinGame.setEnabled(true);
 					this.btnObserveGame.setEnabled(true);
@@ -328,122 +406,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		}
 	}
 
-	// Event for adding private message format to text area
-	private void userListSelect() {
-		String input = chatInputField.getText();
-		if (input.startsWith("@")) {
-			String pmInput[] = input.split("\\s", 2);
-			pmInput[0] = "@" + selectedUser;
-			chatInputField.setText(pmInput[0] + " " + pmInput[1]);
-		}
-		else
-			chatInputField.setText("@" + selectedUser + " " + input);
-	}
-	
 
-	
-	
-	
-	/**
-	* GUI Helpers
-	*/
-//	public JScrollPane getChatPane() {
-//		if(chatPane == null) {
-//			chatPane = new JScrollPane(getChatArea());
-//			chatPane.setPreferredSize(new java.awt.Dimension(406, 267));
-//
-//		}
-//		return chatPane;
-//	}
-//	public JTextArea getChatArea() {
-//		
-//		return chatArea;
-//	}
-	private JTextField getChatInputField() {
-		
-			chatInputField = new JTextField("130.108.28.165");
-			chatInputField.setScrollOffset(1);
-			chatInputField.setPreferredSize(new java.awt.Dimension(389, 29));
-			chatInputField.addKeyListener(new KeyAdapter(){
-				// Listener for ENTER key
-				public void keyPressed(KeyEvent evt) {
-					if (evt.getKeyCode() == 10)
-						inputSubmit();
-				}
-			});
-		
-		return chatInputField;
-	}
-//	private JButton getSubmitButton() {
-////		if (submitButton == null) {
-////			submitButton = new JButton();
-////			submitButton.setText("Enter");
-////			submitButton.setBackground(new java.awt.Color(255,64,64));
-////			submitButton.setBackground(new java.awt.Color(235,233,237));
-////			submitButton.setPreferredSize(new java.awt.Dimension(61, 31));
-////			
-////		}
-////		submitButton.addActionListener(new ActionListener() {
-////			public void actionPerformed(ActionEvent evt) {
-////				inputSubmit();
-////			}
-////		});
-//		return submitButton;
-//	}	
-//	private JTabbedPane getJTabbedPane() {
-////		if(jTabbedPane == null) {
-////			jTabbedPane = new JTabbedPane();
-////			jTabbedPane.setPreferredSize(new java.awt.Dimension(163, 250));
-////			jTabbedPane.addTab("Users", null, getUserPane(), null);
-////			//jTabbedPane.addTab("Tables", null, getTablePane(), null);
-////		}
-//		return jTabbedPane;
-//	}
-	private JScrollPane getUserPane() {
-		if(userPane == null) {
-			userPane = new JScrollPane(getUserListPane());
-		}
-		return userPane;
-	}
-	private JList getUserListPane() {
-		if (userListPane == null) {
-			String[] userList = new String[lobbyUserList.size()];
-			lobbyUserList.toArray(userList);
-//			userListPane = new JList();
-//			userListPane.setModel(new DefaultComboBoxModel(userList));
-//			userListPane.setBackground(new java.awt.Color(255,255,255));
-//			userListPane.setFont(new java.awt.Font("Tahoma",0,12));
-//			userListPane.setModel(new DefaultComboBoxModel(userList));
-//	
-			// Creates pop-up menu and menu item
-			final JPopupMenu popup = new JPopupMenu();
-			JMenuItem menuItem = new JMenuItem("Send a PM");
-			menuItem.addMouseListener(new MouseAdapter() {
-				// Adds PM tag to the input
-				public void mouseReleased(MouseEvent e) {
-					userListSelect();
-				}
-			});
-			popup.add(menuItem);
-			// Opens popup menu
-			userListPane.addMouseListener(new MouseAdapter() {
-				public void mousePressed(MouseEvent e) {
-					maybeShowPopup(e);
-				}
-				public void mouseReleased(MouseEvent e) {
-					int index = userListPane.locationToIndex(e.getPoint());
-					selectedUser = lobbyUserList.get(index);
-					maybeShowPopup(e);
-				}
-				private void maybeShowPopup(MouseEvent e) {
-					if (e.isPopupTrigger())
-						popup.show(e.getComponent(), e.getX(), e.getY());
-				}
-			});
-		}
-		return userListPane;
-	}
-	
 	// Updates the actual user list pane
 	private void updateUserList(){
 		String[] userList = new String[lobbyUserList.size()];
@@ -451,23 +414,44 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		ListModel lstUsersModel = new DefaultComboBoxModel(userList);
 		userListPane.setModel(lstUsersModel);	
 	}
+	//updates the table list pane
+	private void updateTableList(){
+		String[] tblList = new String[tids.length];
+		for(int i = 0; i < tids.length; i++) {
+			tblList[i] = String.valueOf(tids[i]);
+		}
+		ListModel lstTableModel = new DefaultComboBoxModel(tblList);
+		tableListPane.setModel(lstTableModel);	
+	}
 	
-	// Helper method for outputing to the chat pane
-		private void output(String s){		
-	        chatArea.append(s + "\r\n");
-	        chatArea.setCaretPosition(chatArea.getDocument().getLength());
-		}
+	// Helper method for outputting to the chat pane
+	private void output(String s){		
+        chatArea.append(s + "\r\n");
+        chatArea.setCaretPosition(chatArea.getDocument().getLength());
+	}
 
-		// Helper method for outputing to the chat pane
-		private void outputTableList(String s){		
-	        tableList.append(s + "\r\n");
-	        tableList.setCaretPosition(this.tableList.getDocument().getLength());
+	// Forwards debug messages to output() if debugging is turned on
+	private void debugOutput(String s){
+		if (debug)
+			output(s);
+	}
+	
+	//This function *might* give you the correct link-local IPv6 address.
+	private String getLocalIPV6Address() {
+		try {
+			InetAddress[] inet = InetAddress.getAllByName(InetAddress.getLocalHost().getHostName());
+			for (InetAddress addr : inet) {
+		        if (addr instanceof Inet6Address) {
+		            return ((Inet6Address) addr).getHostAddress();
+		        }
+		    }
+		} 
+		catch(UnknownHostException e) {
+			return "fail";
 		}
-		// Forwards debug messages to output() if debugging is turned on
-		private void debugOutput(String s){
-			if (debug)
-				output(s);
-		}
+		return "";
+		
+	}
 
 	/**
 	 * ***************************************
@@ -509,6 +493,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	public void youInLobby() {
 		curState = State.inLobby;
 		output(">> Welcome to the game lobby.");
+		updateUserList();
 	}
 	//alert that you have left the lobby
 	public void youLeftLobby() {
@@ -520,8 +505,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		
 		/*Called when program starts(by outside) to populate the table list*/
 		this.tids = tids;
-		for (int i = 0; i < tids.length ; i++)
-			outputTableList(String.valueOf(tids[i]));
+		updateTableList();
 
 	}
 	//an alert saying that a table state has changed. 
