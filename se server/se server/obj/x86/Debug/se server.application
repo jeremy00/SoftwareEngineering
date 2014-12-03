@@ -8,14 +8,14 @@
     <framework targetVersion="4.0" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="se server.exe.manifest" size="3701">
+    <dependentAssembly dependencyType="install" codebase="se server.exe.manifest" size="3333">
       <assemblyIdentity name="se server.exe" version="1.0.0.1" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="x86" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>iwlFWthmbX7TnjI6P/XMBBkgmts=</dsig:DigestValue>
+        <dsig:DigestValue>WABpLhp2pu85ePgWX4nKltu1SQ4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

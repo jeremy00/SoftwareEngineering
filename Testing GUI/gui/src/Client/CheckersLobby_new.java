@@ -60,6 +60,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		notConnected, connected, inLobby, onTable, inGame
 	};
 
+	 // String list of tables// string lists of users for output
 	private ArrayList<String> lobbyUserList; // string lists of users for output
 	private DefaultListModel tableList; // String list of tables
 	private static RMIServerInterface serverConnection;
@@ -176,7 +177,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	 */
 	public CheckersLobby_new() {
 		super();
-		lobbyUserList = new ArrayList<String>();
+		//selobbyUserList = new ArrayList<String>();
 		tableList = new DefaultListModel();
 		curState = State.notConnected;
 		initGUI();
@@ -285,6 +286,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 				try {
 					serverConnection.makeTable(myName);
 
+
 				} catch (RemoteException e) {
 
 					output("Couldn't create table");
@@ -296,30 +298,30 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 				output(">> Joining table " + selectedTable);
 				try {
 					serverConnection.joinTable(myName, selectedTable);
-
-<<<<<<< HEAD
-					//get the id of the table
-					int tid = Integer.parseInt((String) tableListPane.getSelectedValue());
-					output("Joining game: " + tid);
-					
-					//send message to server to join table
-					try {
-						serverConnection.joinTable(myName, tid);
-						currentTable = new checkersTable(tid, serverConnection);
-					} catch (RemoteException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}// end catch for server call
-				} catch (Exception e) {
-					//pop up box to tell user to select a table.
-					JOptionPane msg = new JOptionPane();
-					msg.showMessageDialog(null,
-							"Please select a table in the list!" + e.getStackTrace());
-=======
+//
+//<<<<<<< HEAD
+//					//get the id of the table
+//					int tid = Integer.parseInt((String) tableListPane.getSelectedValue());
+//					output("Joining game: " + tid);
+//					
+//					//send message to server to join table
+//					try {
+//						serverConnection.joinTable(myName, tid);
+//						currentTable = new checkersTable(tid, serverConnection);
+//					} catch (RemoteException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}// end catch for server call
+//				} catch (Exception e) {
+//					//pop up box to tell user to select a table.
+//					JOptionPane msg = new JOptionPane();
+//					msg.showMessageDialog(null,
+//							"Please select a table in the list!" + e.getStackTrace());
+//=======
 				} catch (RemoteException e) {
 
 					output("Couldn't join table " + selectedTable);
->>>>>>> 28f23bac762e978029f5756d566e80501b9c5d19
+
 				}
 			}
 		});
@@ -459,7 +461,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	private void updateUserList() {
 		String[] userList = new String[lobbyUserList.size()];
 		lobbyUserList.toArray(userList);
-		ListModel lstUsersModel = new DefaultComboBoxModel(userList);
+		ListModel lstUsersModel = new DefaultComboBoxModel();
 		userListPane.setModel(lstUsersModel);
 	}
 
@@ -521,7 +523,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 
 	// alert that a user has left the lobby
 	public void nowLeftLobby(String user) {
-		lobbyUserList.remove(user);
+		//lobbyUserList.remove(user);
 		updateUserList();
 	}
 
@@ -576,7 +578,6 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 
 	public void newTable(int t) {
 		output("Creating table for " + myName);
-<<<<<<< HEAD
 
 		try {
 			serverConnection.makeTable(myName);
@@ -586,17 +587,16 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			debugOutput("Can't make new table at newTable()");
 		}
 
-=======
+
 		int[] tids = {t};
 		this.tableList(tids);
->>>>>>> 28f23bac762e978029f5756d566e80501b9c5d19
 	}
 
 	// alert that you have joined the table with id tid.
 	public void joinedTable(int tid) {
 
 		curState = State.onTable;
-		currentTable = new checkersTable(tid);
+		currentTable = new checkersTable(tid, serverConnection);
 		debugOutput(">> You have joined table " + Integer.toString(tid));
 	}
 

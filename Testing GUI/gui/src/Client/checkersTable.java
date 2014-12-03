@@ -63,7 +63,7 @@ public class checkersTable extends JFrame {
 	 * Create the frame.
 	 */
 	checkersTable(int tid, RMIServerInterface serverConnection){
-		this.serverConnection = serverConnection;
+		//this.serverConnection = serverConnection;
 		lobbyUserList = new ArrayList<String>();
 		tableName = Integer.toString(tid);
 		setConsole("Table #: "+ tableName);
@@ -84,7 +84,7 @@ public class checkersTable extends JFrame {
 	}
 	
 	/**
-	 * Launch the applicat ion.
+	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -247,7 +247,6 @@ public class checkersTable extends JFrame {
 	}
 	//setup the chat
 	public void setChat(){
-		
 		
 	}
 	
