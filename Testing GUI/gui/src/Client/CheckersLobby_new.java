@@ -615,11 +615,13 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	// alert that your color is Black, for the game.
 	public void colorBlack() {
 		currentTable.setConsole("Your color is black");
+		currentTable.setBlackPlayer(1);
 	}
 
 	// alert that your color is Red, for the game.
 	public void colorRed() {
 		currentTable.setConsole("Your color is red");
+		currentTable.setRedPlayer(1);
 	}
 
 	// notice that your opponent has moved from position (fr,fc) to (tr,tc)

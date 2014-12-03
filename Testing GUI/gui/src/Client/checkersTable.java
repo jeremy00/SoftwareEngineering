@@ -46,8 +46,8 @@ public class checkersTable extends JFrame {
 	private piece[][] piecesArray;
 	private JTextArea ChatArea;
 	private piece selectedPiece = new piece(0, table);
-	private int redPlayer;
-	private int blackPlayer;
+	private int redPlayer = 0;// if 0, not sure yet, if 1 you're red
+	private int blackPlayer = 0;// if 0, not sure yet, if 1 you're black
 	public JList userList ; 
 	public boolean pieceIsSelected = false;
 	public int moveToX;
