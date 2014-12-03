@@ -8,7 +8,7 @@ public class piece extends JLabel{
 
 	int x;
 	int y;
-	String color;
+	byte color;
 	final int X_SIZE_IMAGE = 40;
 	final int Y_SIZE_IMAGE = 40;
 	int yDiff =53;//difference in spots on the board
@@ -23,13 +23,13 @@ try{
 		y = 0;
 		//set the image icon of the JLabel, dependent on constructor param red
 		if (red==1){
-			color = "red";
+			color = 2;
 			this.setIcon(new ImageIcon(piece.class.getResource("/Client/red.png")));  }  
 		else if (red == 2)
 		{
-			color="black";
+			color=1;
 			this.setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));}
-		else color = "empty";
+		else color = 0;
 		this.setBounds(x, y, X_SIZE_IMAGE, Y_SIZE_IMAGE);//set the position 
 //		  board.setHorizontalAlignment(SwingConstants.);
 	
@@ -53,18 +53,18 @@ public void setPiece(int boardX, int boardY){
 
 //Called when the piece is selected
 public void setSelected(){
-	if (color=="black")
+	if (color==1)
 	setIcon(new ImageIcon(piece.class.getResource("/Client/black_selected.png")));
-	else     if (color=="red")
+	else     if (color==2)
     	setIcon(new ImageIcon(piece.class.getResource("/Client/red_selected.png")));
 	
 }
 
 //Called when the piece is unselected
 public void setUnSelected(){
-	if (color=="black")
+	if (color==1)
 	setIcon(new ImageIcon(piece.class.getResource("/Client/black.png")));
-	else if (color=="red")
+	else if (color==2)
     	setIcon(new ImageIcon(piece.class.getResource("/Client/red.png")));
 	
 }

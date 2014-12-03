@@ -20,13 +20,13 @@ import javax.swing.JList;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.ListSelectionModel;
 
 //TOP LEFT IS 0,0
 public class checkersTable extends JFrame {
 	private String tableName = "";
 	private JPanel contentPane;
 	private JTextField ChatInputField;
-	private JList UserList;
 	private JButton btnStart, btnLeave, btnSubmit;
 	private JLabel lblUserList, lblTableNum, lblConsole, table;
 	private piece[][] piecesArray;
@@ -104,7 +104,7 @@ public class checkersTable extends JFrame {
 							mouseClick.getY());
 
 					// /If the piece is a valid piece
-					if (newPiece.color != "empty" || selectedPiece == null) {
+					if (newPiece.color != 0 || selectedPiece == null) {
 						// Set the current selected piece back to normal
 						selectedPiece.setUnSelected();
 						selectedPiece = newPiece; // make new piece the selected
@@ -112,7 +112,7 @@ public class checkersTable extends JFrame {
 													// selected
 					}// end if
 					else if (selectedPiece != null
-							&& newPiece.color == " empty") {
+							&& newPiece.color == 0) {
 						System.out.print("move somewhere else");
 					}
 				} catch (Exception e) {
@@ -143,10 +143,6 @@ public class checkersTable extends JFrame {
 		ChatArea.setForeground(Color.BLACK);
 		ChatArea.setBounds(10, 498, 764, 143);
 
-		// User List
-		UserList = new JList();
-		UserList.setBounds(605, 122, 169, 319);
-
 		// Start Button
 		btnStart = new JButton("Start");
 		btnStart.setFont(new Font("Times New Roman", Font.BOLD, 20));
@@ -158,7 +154,7 @@ public class checkersTable extends JFrame {
 		// User List
 		lblUserList = new JLabel("User List");
 		lblUserList.setFont(new Font("Times New Roman", Font.BOLD, 19));
-		lblUserList.setBounds(652, 70, 150, 53);
+		lblUserList.setBounds(624, 71, 150, 53);
 		// Table Number
 		lblTableNum = new JLabel("Table #:");
 		lblTableNum.setFont(new Font("Times New Roman", Font.PLAIN, 18));
@@ -174,7 +170,6 @@ public class checkersTable extends JFrame {
 		contentPane.add(ChatInputField);
 		contentPane.add(btnSubmit);
 		contentPane.add(ChatArea);
-		contentPane.add(UserList);
 		contentPane.add(btnStart);
 		contentPane.add(btnLeave);
 		contentPane.add(lblUserList);
@@ -184,8 +179,61 @@ public class checkersTable extends JFrame {
 		
 		//set table name
 	lblTableNum.setText("Table Num: #"+ tableName);
+	
+	JList list = new JList();
+	list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	list.setBounds(604, 130, 170, 220);
+	contentPane.add(list);
 	}
 
+	
+	//Set up the user List
+	public void setUserList(){
+		
+		
+	}
+	
+	//setup the chat
+	public void setChat(){
+		
+		
+	}
+	
+	
+/*checks the new byte table for changes and applies a movement
+	*/
+	public void updateTableFromServer(byte[][] table){
+		
+		int moveFromX=-1, moveFromY=-1, moveToX=-1, moveToY=-1;
+		//search for two changes.. one will be "empty" and one will be "clear"
+		//keep those changes and apply the move
+		for(int i=0; i < 8; i++){//go through the OLD (piecesArray) and compare to NEW (byte[] table)
+			for(int j=0; j < 8; j++){
+				if(piecesArray[i][j].color != table[i][j] )//there is a match, therefore a movement
+						//if the old spot has a spot and the new spot is empty, a piece moved
+						//MAKING IT THE PIECE TO MOVE FROM!
+					if (piecesArray[i][j].color != 0 && table[i][j] == 0)
+					{
+						moveFromX = i; moveFromY= j;
+					}
+				//If the old spot is empty, and is no longer empty, a piece will be in the new spot
+				//MAKING IT THE MOVE TO SPOT
+				if (piecesArray[i][j].color == 0 && table[i][j] != 0)
+				{
+					moveToX = i; moveToY= j;
+				}
+					
+			}
+		}
+		//Done checking the arrays for movement
+		//if there is a successful find of a movement, then apply movement
+		if(moveFromX != -1 && moveFromY != -1 && moveToX != -1 && moveToY != -1)
+		{
+			movePiece(moveFromX, moveFromY, moveToX, moveToY);
+
+		}
+		
+	}
 	// Set the table up for the first run.
 	// Runs from the top left to the bottom right.
 	public void setTable() {
@@ -221,6 +269,7 @@ public class checkersTable extends JFrame {
 	public void setTablePiece(int i, int j, int red) {
 		piece p = new piece(red, table);
 		p.setPiece(i, j);
+
 		table.add(p);// add the the GUI
 		piecesArray[i][j] = p;
 	}
@@ -246,5 +295,4 @@ public class checkersTable extends JFrame {
 		// " " +piecesArray[x][y].x);
 
 	}
-
 }
