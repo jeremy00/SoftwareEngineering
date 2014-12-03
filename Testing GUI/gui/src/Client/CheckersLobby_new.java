@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Button;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -50,6 +51,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+import javax.swing.text.Position;
 import javax.swing.ListSelectionModel;
 
 public class CheckersLobby_new extends JFrame implements CheckersClient {
@@ -59,7 +61,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	};
 
 	private ArrayList<String> lobbyUserList; // string lists of users for output
-	private ArrayList<String> tableList; // String list of tables
+	private DefaultListModel tableList; // String list of tables
 	private static RMIServerInterface serverConnection;
 	private static State curState;
 	private static String yourip = "fe80::108c:c728:1808:cec5";
@@ -175,7 +177,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	public CheckersLobby_new() {
 		super();
 		lobbyUserList = new ArrayList<String>();
-		tableList = new ArrayList<String>();
+		tableList = new DefaultListModel();
 		curState = State.notConnected;
 		initGUI();
 	}
@@ -228,7 +230,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			scrollPane_1.setBounds(192, 11, 270, 147);
 			contentPane.add(scrollPane_1);
 
-			tableListPane = new JList();
+			tableListPane = new JList(tableList);
 			tableListPane.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 			scrollPane_1.setViewportView(tableListPane);
@@ -291,8 +293,11 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		});
 		btnJoinGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				try {//catch not selecting a table
+				output(">> Joining table " + selectedTable);
+				try {
+					serverConnection.joinTable(myName, selectedTable);
 
+<<<<<<< HEAD
 					//get the id of the table
 					int tid = Integer.parseInt((String) tableListPane.getSelectedValue());
 					output("Joining game: " + tid);
@@ -310,12 +315,24 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 					JOptionPane msg = new JOptionPane();
 					msg.showMessageDialog(null,
 							"Please select a table in the list!" + e.getStackTrace());
+=======
+				} catch (RemoteException e) {
+
+					output("Couldn't join table " + selectedTable);
+>>>>>>> 28f23bac762e978029f5756d566e80501b9c5d19
 				}
-			}// end action performed.
+			}
 		});
 		btnObserveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				// inputSubmit();
+				output(">> Observing table " + selectedTable);
+				try {
+					serverConnection.observeTable(myName, selectedTable);
+
+				} catch (RemoteException e) {
+
+					output("Couldn't observe table " + selectedTable);
+				}
 			}
 		});
 
@@ -366,7 +383,8 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		tableListPane.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
 				int selected = tableListPane.getSelectedIndex();
-				selectedTable = tids[selected];
+				String table = tableList.getElementAt(selected).toString();
+				selectedTable = Integer.parseInt(table.split("\\s")[0]);
 				try {
 					serverConnection.getTblStatus(myName, selectedTable);
 				} catch (RemoteException ex) {
@@ -443,16 +461,6 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		lobbyUserList.toArray(userList);
 		ListModel lstUsersModel = new DefaultComboBoxModel(userList);
 		userListPane.setModel(lstUsersModel);
-	}
-
-	// updates the table list pane
-	private void updateTableList() {
-		String[] tblList = new String[tids.length];
-		for (int i = 0; i < tids.length; i++) {
-			tblList[i] = String.valueOf(tids[i]);
-		}
-		ListModel lstTableModel = new DefaultComboBoxModel(tblList);
-		tableListPane.setModel(lstTableModel);
 	}
 
 	// Helper method for outputting to the chat pane
@@ -540,29 +548,35 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 
 	// initial listing of tables
 	public void tableList(int[] tids) {
-
-		/* Called when program starts(by outside) to populate the table list */
-		this.tids = tids;
-		updateTableList();
-
+		for (int i = 0; i < tids.length; i++) {
+			boolean tableExists = false;
+			for (Object table : tableList.toArray()) {
+				if (table.toString().startsWith(String.valueOf(tids[i]))){
+					tableExists = true;
+					break;
+				}
+			}
+			if (!tableExists) {
+				tableList.addElement(String.valueOf(tids[i]));
+			}
+		}
 	}
 
 	// an alert saying that a table state has changed.
 	// this is received whenever anyone joins or leaves a table,
 	// or if table state is queried by calling getTblStatus()
 	public void onTable(int tid, String blackSeat, String redSeat) {
+		output("Table " + tid + ": " +
+				(blackSeat.equals("-1") ? "Empty" : blackSeat) + " " +
+						(redSeat.equals("-1") ? "Empty" : redSeat));
 		currentTable.setUserList(blackSeat, redSeat);
 		// tableGame(
 	}
-
-	// same preconditions as onTable()
-	// called immediately after onTable()
-	public void tableGame(int tid) throws RemoteException {
-
-	}
+		
 
 	public void newTable(int t) {
 		output("Creating table for " + myName);
+<<<<<<< HEAD
 
 		try {
 			serverConnection.makeTable(myName);
@@ -572,12 +586,17 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 			debugOutput("Can't make new table at newTable()");
 		}
 
+=======
+		int[] tids = {t};
+		this.tableList(tids);
+>>>>>>> 28f23bac762e978029f5756d566e80501b9c5d19
 	}
 
 	// alert that you have joined the table with id tid.
 	public void joinedTable(int tid) {
 
 		curState = State.onTable;
+		currentTable = new checkersTable(tid);
 		debugOutput(">> You have joined table " + Integer.toString(tid));
 	}
 
