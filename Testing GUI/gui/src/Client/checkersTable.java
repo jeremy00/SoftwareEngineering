@@ -52,6 +52,8 @@ public class checkersTable extends JFrame {
 	public boolean pieceIsSelected = false;
 	public int moveToX;
 	public int moveToY;
+	public byte requestMoveX;
+	public byte requestMoveY;
 	RMIServerInterface serverConnection;
 	
 
@@ -148,13 +150,16 @@ public class checkersTable extends JFrame {
 						pieceIsSelected = true;
 					}// end if
 					
-					//otherwise the person is trying to select a piece.
+					//otherwise the person trying to move a piece
 					else if (selectedPiece != null && newPiece.color == 0)
 					{
 						if(pieceIsSelected){
 							System.out.println("mouse click x: " + mouseClick.getX()
-									+ "  mouse click y: " + mouseClick.getY());
+									+ "  mouse click y: " + mouseClick.getY()
+									+ " movement on board of " +mouseClick.getX()/50 + " and " +mouseClick.getY()/50);
 							
+							 setRequestMoveX((byte) (mouseClick.getX()/50));
+							 setRequestMoveY((byte) (mouseClick.getY()/50));
 						}
 					}
 
@@ -338,9 +343,6 @@ public class checkersTable extends JFrame {
 	}
 
 	public piece findPiece(int posX, int posY) {
-
-		
-
 		// each step is 50px apart.
 		// so divide them by 50 and throw the response to the array to be
 		// changed.
@@ -351,8 +353,30 @@ public class checkersTable extends JFrame {
 		// System.out.println("Position x: " + x +" Position y: "+ y +
 		// "color: "+ piecesArray[y][x].color + "spot: " +piecesArray[x][y].x +
 		// " " +piecesArray[x][y].x);
-
 	}
+	
+	
+	
+	//return an array of a movement. 0 being the x and 1 being the y
+	public byte[] getRequestMoveTo(){
+		byte[] movement = new byte[1];
+		movement[0] = getRequestMoveX();
+		movement[1] = getRequestMoveY();
+				return movement;
+	}
+	public byte getRequestMoveX() {
+		return requestMoveX;
+	}
+	public void setRequestMoveX(byte requestMoveX) {
+		this.requestMoveX = requestMoveX;
+	}
+	public byte getRequestMoveY() {
+		return requestMoveY;
+	}
+	public void setRequestMoveY(byte requestMoveY) {
+		this.requestMoveY = requestMoveY;
+	}
+
 //	
 //	public int findXPos(){}
 //	public int findYPos(){}
