@@ -125,13 +125,15 @@ public class checkersTable extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent mouseClick) {
 				try {
-					System.out.println("mouse click x: " + mouseClick.getX()
-							+ "  mouse click y: " + mouseClick.getY());
-					System.out.println(findPiece(mouseClick.getX(),
-							mouseClick.getY()).color);
+					int posX = mouseClick.getX();
+					int posY = mouseClick.getY();
+					System.out.println("mouse click x: " + posX
+							+ "  mouse click y: " + posY);
+					System.out.println(findPiece(posX,
+							posY).color);
 					// find the piece that the user clicked
-					piece newPiece = findPiece(mouseClick.getX(),
-							mouseClick.getY());
+					piece newPiece = findPiece(posX,
+							posY);
 
 					// /If the piece is a valid piece
 					if (newPiece.color != 0 || selectedPiece == null) {
