@@ -47,6 +47,10 @@ public class checkersTable extends JFrame {
 	private int redPlayer;
 	private int blackPlayer;
 	public JList userList ; 
+	public boolean pieceIsSelected = false;
+	public int moveToX;
+	public int moveToY;
+
 	checkersTable(int tid){
 		lobbyUserList = new ArrayList<String>();
 		tableName = Integer.toString(tid);
@@ -136,11 +140,19 @@ public class checkersTable extends JFrame {
 						selectedPiece = newPiece; // make new piece the selected
 						selectedPiece.setSelected();// set the new piece as
 													// selected
+						pieceIsSelected = true;
 					}// end if
-					else if (selectedPiece != null
-							&& newPiece.color == 0) {
-						System.out.print("move somewhere else");
+					
+					//otherwise the person is trying to select a piece.
+					else if (selectedPiece != null && newPiece.color == 0)
+					{
+						if(pieceIsSelected){
+							int x = posX / 50;
+							int y = posY / 50;
+						}
 					}
+
+					
 				} catch (Exception e) {
 					System.out.print("Error at mouse click event"
 							+ e.toString());
@@ -337,3 +349,4 @@ public class checkersTable extends JFrame {
 
 	}
 }
+
