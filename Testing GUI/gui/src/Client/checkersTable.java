@@ -27,6 +27,8 @@ import java.util.ArrayList;
 
 import javax.swing.ListSelectionModel;
 
+import RMIConnection.Interfaces.RMIServerInterface;
+
 //TOP LEFT IS 0,0
 public class checkersTable extends JFrame {
 	
@@ -50,8 +52,11 @@ public class checkersTable extends JFrame {
 	public boolean pieceIsSelected = false;
 	public int moveToX;
 	public int moveToY;
+	RMIServerInterface serverConnection;
+	
 
-	checkersTable(int tid){
+	checkersTable(int tid, RMIServerInterface serverConnection){
+		this.serverConnection = serverConnection;
 		lobbyUserList = new ArrayList<String>();
 		tableName = Integer.toString(tid);
 		setConsole("Table #: "+ tableName);
@@ -147,8 +152,9 @@ public class checkersTable extends JFrame {
 					else if (selectedPiece != null && newPiece.color == 0)
 					{
 						if(pieceIsSelected){
-							int x = posX / 50;
-							int y = posY / 50;
+							System.out.println("mouse click x: " + mouseClick.getX()
+									+ "  mouse click y: " + mouseClick.getY());
+							
 						}
 					}
 
@@ -190,7 +196,7 @@ public class checkersTable extends JFrame {
 		btnLeave.setFont(new Font("Times New Roman", Font.BOLD, 20));
 		btnLeave.setBounds(10, 232, 124, 68);
 		// User List
-		lblUserList = new JLabel("User List");
+		lblUserList = new JLabel("User List");	
 		lblUserList.setFont(new Font("Times New Roman", Font.BOLD, 19));
 		lblUserList.setBounds(624, 71, 150, 53);
 		// Table Number
@@ -236,7 +242,6 @@ public class checkersTable extends JFrame {
 		lobbyUserList.toArray(userList);
 		ListModel lstUsersModel = new DefaultComboBoxModel(userList);
 		this.userList.setModel(lstUsersModel);
-	
 		
 	}
 	
@@ -348,5 +353,8 @@ public class checkersTable extends JFrame {
 		// " " +piecesArray[x][y].x);
 
 	}
+//	
+//	public int findXPos(){}
+//	public int findYPos(){}
 }
 

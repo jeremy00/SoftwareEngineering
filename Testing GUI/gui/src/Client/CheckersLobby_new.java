@@ -300,7 +300,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 					//send message to server to join table
 					try {
 						serverConnection.joinTable(myName, tid);
-						currentTable = new checkersTable(tid);
+						currentTable = new checkersTable(tid, serverConnection);
 					} catch (RemoteException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -566,7 +566,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 
 		try {
 			serverConnection.makeTable(myName);
-			currentTable = new checkersTable(t);
+			currentTable = new checkersTable(t, serverConnection);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			debugOutput("Can't make new table at newTable()");
