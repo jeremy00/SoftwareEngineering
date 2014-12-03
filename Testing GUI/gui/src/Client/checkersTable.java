@@ -37,7 +37,7 @@ public class checkersTable extends JFrame {
 	private final JScrollPane scrollPane_1 = new JScrollPane();
 	private final JScrollPane scrollPane_2 = new JScrollPane();
 	
-	private ArrayList<String> lobbyUserList; // string lists of users for output
+	//GUI Variables
 	private String tableName = "";
 	private JPanel contentPane;
 	private JTextField ChatInputField;
@@ -45,6 +45,9 @@ public class checkersTable extends JFrame {
 	private JLabel lblUserList, lblTableNum, lblConsole, table;
 	private piece[][] piecesArray;
 	private JTextArea ChatArea;
+	
+	//Table variables
+	private ArrayList<String> lobbyUserList; // string lists of users for output
 	private piece selectedPiece = new piece(0, table);
 	private int redPlayer = 0;// if 0, not sure yet, if 1 you're red
 	private int blackPlayer = 0;// if 0, not sure yet, if 1 you're black
@@ -56,7 +59,9 @@ public class checkersTable extends JFrame {
 	public byte requestMoveY;
 	RMIServerInterface serverConnection;
 	
-
+	/**
+	 * Create the frame.
+	 */
 	checkersTable(int tid, RMIServerInterface serverConnection){
 		this.serverConnection = serverConnection;
 		lobbyUserList = new ArrayList<String>();
@@ -77,18 +82,7 @@ public class checkersTable extends JFrame {
 		});
 
 	}
-	public int getBlackPlayer() {
-		return blackPlayer;
-	}
-	public void setBlackPlayer(int blackPlayer) {
-		this.blackPlayer = blackPlayer;
-	}
-	public int getRedPlayer() {
-		return redPlayer;
-	}
-	public void setRedPlayer(int redPlayer) {
-		this.redPlayer = redPlayer;
-	}
+	
 	/**
 	 * Launch the applicat ion.
 	 */
@@ -105,13 +99,8 @@ public class checkersTable extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	
 	public checkersTable() {
-		piecesArray = new piece[8][8];
-		setGUI();
-		setTable();
 
 	}
 
@@ -327,7 +316,7 @@ public class checkersTable extends JFrame {
 	// called by setTable()
 	// Creates a new piece by taking in the row, col, and if the piece is
 	// red/black.
-	public void setTablePiece(int i, int j, int red) {
+	public void setTablePiece(int i, int j, int red) {	
 		piece p = new piece(red, table);
 		p.setPiece(i, j);
 
@@ -375,6 +364,18 @@ public class checkersTable extends JFrame {
 	}
 	public void setRequestMoveY(byte requestMoveY) {
 		this.requestMoveY = requestMoveY;
+	}
+	public int getBlackPlayer() {
+		return blackPlayer;
+	}
+	public void setBlackPlayer(int blackPlayer) {
+		this.blackPlayer = blackPlayer;
+	}
+	public int getRedPlayer() {
+		return redPlayer;
+	}
+	public void setRedPlayer(int redPlayer) {
+		this.redPlayer = redPlayer;
 	}
 
 //	
