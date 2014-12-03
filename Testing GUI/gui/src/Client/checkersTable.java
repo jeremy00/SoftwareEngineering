@@ -6,8 +6,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.ImageIcon;
+import javax.swing.JScrollPane;
+import javax.swing.ListModel;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 
@@ -20,10 +23,19 @@ import javax.swing.JList;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.ListSelectionModel;
 
 //TOP LEFT IS 0,0
 public class checkersTable extends JFrame {
+	
+	//Scroll Panes
+	private final JScrollPane scrollPane = new JScrollPane();
+	private final JScrollPane scrollPane_1 = new JScrollPane();
+	private final JScrollPane scrollPane_2 = new JScrollPane();
+	
+	private ArrayList<String> lobbyUserList; // string lists of users for output
 	private String tableName = "";
 	private JPanel contentPane;
 	private JTextField ChatInputField;
@@ -32,10 +44,11 @@ public class checkersTable extends JFrame {
 	private piece[][] piecesArray;
 	private JTextArea ChatArea;
 	private piece selectedPiece = new piece(0, table);
-
-	
+	private int redPlayer;
+	private int blackPlayer;
+	public JList userList ; 
 	checkersTable(int tid){
-		
+		lobbyUserList = new ArrayList<String>();
 		tableName = Integer.toString(tid);
 		piecesArray = new piece[8][8];
 		setGUI();
@@ -51,6 +64,18 @@ public class checkersTable extends JFrame {
 			}
 		});
 
+	}
+	public int getBlackPlayer() {
+		return blackPlayer;
+	}
+	public void setBlackPlayer(int blackPlayer) {
+		this.blackPlayer = blackPlayer;
+	}
+	public int getRedPlayer() {
+		return redPlayer;
+	}
+	public void setRedPlayer(int redPlayer) {
+		this.redPlayer = redPlayer;
 	}
 	/**
 	 * Launch the applicat ion.
@@ -165,6 +190,11 @@ public class checkersTable extends JFrame {
 		lblConsole.setFont(new Font("Times New Roman", Font.PLAIN, 18));
 		lblConsole.setBounds(230, 45, 322, 14);
  
+		userList = new JList();
+		userList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		userList.setBounds(604, 130, 170, 220);
+		scrollPane_2.setViewportView(userList);
+		
 		// Now add everything to the table
 		contentPane.add(table);
 		contentPane.add(ChatInputField);
@@ -175,24 +205,32 @@ public class checkersTable extends JFrame {
 		contentPane.add(lblUserList);
 		contentPane.add(lblTableNum);
 		contentPane.add(lblConsole);
-
+		contentPane.add(userList);
 		
 		//set table name
 	lblTableNum.setText("Table Num: #"+ tableName);
 	
-	JList list = new JList();
-	list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	list.setBounds(604, 130, 170, 220);
-	contentPane.add(list);
+	
 	}
 
 	
-	//Set up the user List
-	public void setUserList(){
+	//Set up the user List, called with WHO_ON_TBL 219, and onTable() in checkersLobby
+	public void setUserList(String black, String red){
+		lobbyUserList.add(black + " (black)");
+		lobbyUserList.add(red+ " (red)");
 		
+		String[] userList = new String[lobbyUserList.size()];
+		lobbyUserList.toArray(userList);
+		ListModel lstUsersModel = new DefaultComboBoxModel(userList);
+		this.userList.setModel(lstUsersModel);
+	
 		
 	}
 	
+	//Set the console
+	public void setConsole(String text){
+		lblConsole.setText(text);
+	}
 	//setup the chat
 	public void setChat(){
 		

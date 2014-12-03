@@ -532,6 +532,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	// or if table state is queried by calling getTblStatus()
 	public void onTable(int tid, String blackSeat, String redSeat) {
 		currentTableID = tid;
+		currentTable.setUserList(blackSeat, redSeat);
 		// tableGame(
 	}
 
@@ -592,12 +593,12 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 
 	// alert that your color is Black, for the game.
 	public void colorBlack() {
-
+		currentTable.setConsole("Your color is black");
 	}
 
 	// alert that your color is Red, for the game.
 	public void colorRed() {
-
+		currentTable.setConsole("Your color is red");
 	}
 
 	// notice that your opponent has moved from position (fr,fc) to (tr,tc)
