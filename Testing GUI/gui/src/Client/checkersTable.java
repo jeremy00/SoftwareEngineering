@@ -50,6 +50,7 @@ public class checkersTable extends JFrame {
 	checkersTable(int tid){
 		lobbyUserList = new ArrayList<String>();
 		tableName = Integer.toString(tid);
+		setConsole("Table #: "+ tableName);
 		piecesArray = new piece[8][8];
 		setGUI();
 		setTable();
@@ -320,6 +321,8 @@ public class checkersTable extends JFrame {
 	}
 
 	public piece findPiece(int posX, int posY) {
+
+		
 
 		// each step is 50px apart.
 		// so divide them by 50 and throw the response to the array to be

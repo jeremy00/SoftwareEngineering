@@ -12,6 +12,7 @@ import java.awt.Button;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -290,8 +291,27 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 		});
 		btnJoinGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
-				// inputSubmit();
-			}
+				try {//catch not selecting a table
+
+					//get the id of the table
+					int tid = Integer.parseInt((String) tableListPane.getSelectedValue());
+					output("Joining game: " + tid);
+					
+					//send message to server to join table
+					try {
+						serverConnection.joinTable(myName, tid);
+						currentTable = new checkersTable(tid);
+					} catch (RemoteException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}// end catch for server call
+				} catch (Exception e) {
+					//pop up box to tell user to select a table.
+					JOptionPane msg = new JOptionPane();
+					msg.showMessageDialog(null,
+							"Please select a table in the list!" + e.getStackTrace());
+				}
+			}// end action performed.
 		});
 		btnObserveGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -531,7 +551,6 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 	// this is received whenever anyone joins or leaves a table,
 	// or if table state is queried by calling getTblStatus()
 	public void onTable(int tid, String blackSeat, String redSeat) {
-		currentTableID = tid;
 		currentTable.setUserList(blackSeat, redSeat);
 		// tableGame(
 	}
@@ -544,9 +563,10 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 
 	public void newTable(int t) {
 		output("Creating table for " + myName);
-		currentTable = new checkersTable(t);
+
 		try {
 			serverConnection.makeTable(myName);
+			currentTable = new checkersTable(t);
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block
 			debugOutput("Can't make new table at newTable()");
@@ -556,6 +576,7 @@ public class CheckersLobby_new extends JFrame implements CheckersClient {
 
 	// alert that you have joined the table with id tid.
 	public void joinedTable(int tid) {
+
 		curState = State.onTable;
 		debugOutput(">> You have joined table " + Integer.toString(tid));
 	}
